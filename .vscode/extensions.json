@@ -1,0 +1,46 @@
+{
+  "recommendations": [
+    // Essential for Remote WSL Development
+    "ms-vscode-remote.remote-wsl",
+
+    // Language Support
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+
+    // TypeScript & React
+    "ms-vscode.vscode-typescript-next",
+    "dsznajder.es7-react-js-snippets",
+
+    // Git Integration
+    "eamodio.gitlens",
+    "mhutchie.git-graph",
+
+    // Database Tools
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg",
+
+    // Docker Support
+    "ms-azuretools.vscode-docker",
+
+    // Productivity
+    "christian-kohler.path-intellisense",
+    "formulahendry.auto-rename-tag",
+    "naumovs.color-highlight",
+    "wayou.vscode-todo-highlight",
+
+    // Code Quality
+    "sonarsource.sonarlint-vscode",
+    "usernamehw.errorlens",
+
+    // Markdown Support
+    "yzhang.markdown-all-in-one",
+    "bierner.markdown-preview-github-styles"
+  ],
+
+  "unwantedRecommendations": [
+    // Extensions that might cause performance issues in Remote WSL
+    "ms-vscode.live-server",
+    "ritwickdey.liveserver"
+  ]
+}

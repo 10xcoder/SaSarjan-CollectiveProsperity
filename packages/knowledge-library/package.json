@@ -1,0 +1,91 @@
+{
+  "name": "@sasarjan/knowledge-library",
+  "version": "1.0.0",
+  "description": "Reusable knowledge library module for SaSarjan apps - democratizing access to wisdom and learning",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix"
+  },
+  "keywords": [
+    "knowledge",
+    "library",
+    "education",
+    "learning",
+    "wisdom",
+    "content",
+    "sasarjan"
+  ],
+  "author": "SaSarjan Team",
+  "license": "MIT",
+  "dependencies": {
+    "@sasarjan/database": "workspace:*",
+    "@sasarjan/profile-core": "workspace:*",
+    "@supabase/supabase-js": "^2.38.0",
+    "zod": "^3.22.0",
+    "nanoid": "^5.0.4",
+    "fuse.js": "^7.0.0",
+    "marked": "^9.1.6",
+    "dompurify": "^3.0.5",
+    "jsdom": "^23.0.1",
+    "slugify": "^1.6.6",
+    "mime-types": "^2.1.35"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/dompurify": "^3.0.5",
+    "@types/jsdom": "^21.1.6",
+    "@types/mime-types": "^2.1.4",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "eslint": "^8.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./api": {
+      "types": "./dist/api/index.d.ts",
+      "import": "./dist/api/index.js",
+      "require": "./dist/api/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js",
+      "require": "./dist/types/index.js"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js",
+      "require": "./dist/components/index.js"
+    },
+    "./hooks": {
+      "types": "./dist/hooks/index.d.ts",
+      "import": "./dist/hooks/index.js",
+      "require": "./dist/hooks/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js",
+      "require": "./dist/utils/index.js"
+    }
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ]
+}

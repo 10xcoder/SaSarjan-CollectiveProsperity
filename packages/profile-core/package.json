@@ -1,0 +1,71 @@
+{
+  "name": "@sasarjan/profile-core",
+  "version": "1.0.0",
+  "description": "Centralized profile management system for SaSarjan App Store",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "test:functional": "tsx src/__tests__/test-runner.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "profile",
+    "user-management",
+    "multi-profile",
+    "cross-app"
+  ],
+  "author": "SaSarjan Team",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.50.3",
+    "nanoid": "^5.0.4",
+    "zod": "^3.22.0",
+    "zustand": "^5.0.2"
+  },
+  "peerDependencies": {
+    "@sasarjan/auth": "workspace:*",
+    "@sasarjan/database": "workspace:*",
+    "react": "^18.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^22.16.0",
+    "@types/react": "^18.3.23",
+    "happy-dom": "^18.0.1",
+    "react": "^19.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.5.4",
+    "vitest": "^3.2.4"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js",
+      "require": "./dist/types/index.js"
+    },
+    "./api": {
+      "types": "./dist/api/index.d.ts",
+      "import": "./dist/api/index.js",
+      "require": "./dist/api/index.js"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js",
+      "require": "./dist/components/index.js"
+    }
+  }
+}

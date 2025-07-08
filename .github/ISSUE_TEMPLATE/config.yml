@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🚨 Security Vulnerability
+    url: mailto:security@sasarjan.app
+    about: Please report security vulnerabilities via email to our security team
+  - name: 💬 General Discussion
+    url: https://github.com/sasarjan/SaSarjan-AppStore/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 📖 Documentation
+    url: https://docs.sasarjan.app
+    about: Check our comprehensive documentation before creating an issue
+  - name: 🤝 Community Support
+    url: https://discord.gg/sasarjan
+    about: Get help from the community on our Discord server

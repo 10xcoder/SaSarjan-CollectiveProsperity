@@ -1,0 +1,216 @@
+name: 📚 Documentation
+description: Report missing, unclear, or incorrect documentation
+title: "[Docs]: "
+labels: ["documentation", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve our documentation! Clear documentation is essential for our collective prosperity mission.
+
+  - type: checkboxes
+    id: initial-checks
+    attributes:
+      label: Initial Checks
+      description: Please confirm you have done the following
+      options:
+        - label: I have searched existing documentation issues
+          required: true
+        - label: I have checked the latest documentation
+          required: true
+
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: Documentation Type
+      description: What type of documentation needs attention?
+      options:
+        - API Documentation
+        - User Guide/Tutorial
+        - Developer Guide
+        - Setup/Installation Instructions
+        - Architecture Documentation
+        - Code Comments
+        - README files
+        - Sprint/Planning Documentation
+        - Team Guidelines
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      description: What's the problem with the documentation?
+      options:
+        - Missing documentation
+        - Incorrect/outdated information
+        - Unclear or confusing content
+        - Poor organization/structure
+        - Broken links or references
+        - Grammar/spelling errors
+        - Missing examples
+        - Incomplete coverage
+      default: 0
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Documentation Location
+      description: Where is this documentation located?
+      placeholder: "e.g., /plan/teams/developers/shared/onboarding-guide.md, API endpoint docs, README.md"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-content
+    attributes:
+      label: Current Content (if applicable)
+      description: What does the current documentation say?
+      placeholder: Quote the problematic text or describe what's currently documented
+
+  - type: textarea
+    id: expected-content
+    attributes:
+      label: Expected/Improved Content
+      description: What should the documentation say instead?
+      placeholder: Provide the correct information or describe what should be documented
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context & Use Case
+      description: Why is this documentation important? Who needs it?
+      placeholder: |
+        - Which team members need this information?
+        - What task were you trying to accomplish?
+        - How does this impact productivity?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: audience
+    attributes:
+      label: Target Audience
+      description: Who is the primary audience for this documentation?
+      options:
+        - New developers (onboarding)
+        - Experienced developers
+        - Claude AI team
+        - Central team
+        - Independent developers
+        - Project managers
+        - End users
+        - Multiple audiences
+      default: 1
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Documentation Priority
+      description: How important is fixing this documentation?
+      options:
+        - Low - Minor improvement
+        - Medium - Affects productivity
+        - High - Blocks development work
+        - Critical - Prevents team onboarding
+      default: 1
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: improvement-areas
+    attributes:
+      label: Improvement Areas
+      description: What aspects need improvement? (Check all that apply)
+      options:
+        - label: Clarity and readability
+        - label: Completeness and coverage
+        - label: Accuracy and correctness
+        - label: Examples and code samples
+        - label: Step-by-step instructions
+        - label: Screenshots or diagrams
+        - label: Cross-references and links
+        - label: Organization and structure
+        - label: Search and navigation
+        - label: Version control and updates
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Missing Examples
+      description: What examples or code samples would be helpful?
+      placeholder: Describe specific examples that would clarify the documentation
+
+  - type: input
+    id: sprint-impact
+    attributes:
+      label: Sprint Impact
+      description: Does this documentation issue affect current sprint work?
+      placeholder: "Sprint Week X, blocks todo-123"
+
+  - type: checkboxes
+    id: doc-categories
+    attributes:
+      label: Documentation Categories
+      description: Which documentation areas are affected? (Check all that apply)
+      options:
+        - label: Setup and Installation
+        - label: Development Workflow
+        - label: Code Standards and Conventions
+        - label: Testing and Quality Assurance
+        - label: Deployment and Operations
+        - label: Architecture and Design
+        - label: API Reference
+        - label: User Guides and Tutorials
+        - label: Team Processes and Guidelines
+        - label: Sprint and Project Management
+
+  - type: textarea
+    id: references
+    attributes:
+      label: Reference Materials
+      description: Any reference materials, links, or examples that would help?
+      placeholder: |
+        - Links to good documentation examples
+        - Related documentation that works well
+        - External resources or standards to follow
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: If you have ideas for how to fix this, please share them
+      placeholder: |
+        - Suggested content structure
+        - Specific text improvements
+        - Additional sections needed
+        - Better organization approach
+
+  - type: checkboxes
+    id: team-assignment
+    attributes:
+      label: Team Assignment
+      description: Which team should handle this documentation update?
+      options:
+        - label: Claude AI Team (automated documentation)
+        - label: Central Team (architecture and core docs)
+        - label: Independent Developers (community docs)
+        - label: Technical Writers
+        - label: Subject Matter Experts
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other information that would be helpful
+      placeholder: Screenshots, error messages, related issues, etc.

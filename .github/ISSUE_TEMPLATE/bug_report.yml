@@ -1,0 +1,165 @@
+name: 🐛 Bug Report
+description: Report a bug or unexpected behavior
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the form below to help us understand and reproduce the issue.
+
+  - type: checkboxes
+    id: initial-checks
+    attributes:
+      label: Initial Checks
+      description: Please confirm you have done the following
+      options:
+        - label: I have searched existing issues and this is not a duplicate
+          required: true
+        - label: I have checked the documentation and FAQ
+          required: true
+        - label: I am running the latest version
+          required: true
+
+  - type: dropdown
+    id: app
+    attributes:
+      label: Which app is affected?
+      description: Select the app where you encountered the bug
+      options:
+        - Web (main platform)
+        - TalentExcel
+        - SevaPremi
+        - 10xGrowth
+        - Admin
+        - Multiple apps
+        - Not sure
+      default: 0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Bug Priority
+      description: How critical is this issue?
+      options:
+        - Low - Minor inconvenience
+        - Medium - Affects functionality but has workaround
+        - High - Breaks core functionality
+        - Critical - Security issue or complete system failure
+      default: 1
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Bug Summary
+      description: A clear and concise description of what the bug is
+      placeholder: What happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: What should have happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+      placeholder: What actually happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the bug
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Information
+      description: Please provide details about your environment
+      value: |
+        - OS: [e.g. Windows 11, macOS 13, Ubuntu 22.04]
+        - Browser: [e.g. Chrome 120, Firefox 121, Safari 17]
+        - Device: [e.g. Desktop, Mobile, Tablet]
+        - Screen Resolution: [e.g. 1920x1080]
+        - Network: [e.g. Wifi, 4G, Ethernet]
+    validations:
+      required: true
+
+  - type: textarea
+    id: console-errors
+    attributes:
+      label: Console Errors
+      description: Any errors in the browser console (F12 → Console tab)
+      render: javascript
+      placeholder: Paste any console errors here
+
+  - type: textarea
+    id: network-errors
+    attributes:
+      label: Network Errors
+      description: Any failed network requests (F12 → Network tab)
+      placeholder: List any failed API calls or resource loading errors
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem
+      placeholder: Screenshots, error messages, related issues, etc.
+
+  - type: dropdown
+    id: sprint-impact
+    attributes:
+      label: Sprint Impact
+      description: Does this bug block current sprint goals?
+      options:
+        - No impact on current sprint
+        - Minor impact - can work around
+        - Major impact - blocks sprint deliverables
+        - Critical blocker - requires immediate attention
+      default: 0
+
+  - type: input
+    id: related-todos
+    attributes:
+      label: Related Todo Items
+      description: List any todo item IDs this bug affects
+      placeholder: "todo-123, todo-456"
+
+  - type: checkboxes
+    id: prosperity-impact
+    attributes:
+      label: Collective Prosperity Impact
+      description: Which prosperity categories does this bug affect? (Check all that apply)
+      options:
+        - label: Personal Transformation
+        - label: Organizational Excellence
+        - label: Community Resilience
+        - label: Ecological Regeneration
+        - label: Economic Empowerment
+        - label: Knowledge Commons
+        - label: Social Innovation
+        - label: Cultural Expression

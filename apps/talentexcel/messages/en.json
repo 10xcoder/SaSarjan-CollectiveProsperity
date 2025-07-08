@@ -1,0 +1,24 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close"
+  },
+  "navigation": {
+    "home": "Home",
+    "opportunities": "Opportunities",
+    "applications": "Applications",
+    "profile": "Profile",
+    "dashboard": "Dashboard"
+  },
+  "home": {
+    "title": "TalentExcel",
+    "subtitle": "Excellence in Career Opportunities",
+    "description": "Discover and excel in career opportunities that align with your skills and aspirations"
+  }
+}

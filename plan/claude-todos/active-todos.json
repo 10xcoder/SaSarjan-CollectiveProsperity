@@ -1,0 +1,354 @@
+{
+  "lastUpdated": "07-Jul-2025, Monday 23:20 IST",
+  "sessionId": "2025-07-07-terminal-1-completed",
+  "activeTerminals": [
+    {
+      "id": "terminal-1",
+      "startTime": "07-Jul-2025, Monday 22:25 IST",
+      "status": "completed",
+      "currentTask": "documentation-completed",
+      "lastActivity": "07-Jul-2025, Monday 23:20 IST",
+      "completedTasks": [
+        "landing-pages-implementation",
+        "documentation-updates",
+        "terminal-2-setup"
+      ]
+    }
+  ],
+  "taskLocks": {},
+  "todos": [
+    {
+      "id": "todo-consolidation",
+      "content": "Consolidate 55+ scattered tasks from 4 different systems and create unified priority list",
+      "status": "in_progress",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 22:25 IST",
+      "dependencies": [],
+      "assignedTo": "terminal-1"
+    },
+    {
+      "id": "multi-terminal-sync",
+      "content": "Create multi-terminal Claude sync system for task coordination",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 22:25 IST",
+      "dependencies": ["todo-consolidation"]
+    },
+    {
+      "id": "sevapremi-setup-guide",
+      "content": "Create SevaPremi developer setup guide using TalentExcel template",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 22:25 IST",
+      "dependencies": [],
+      "source": "sunday-tasks"
+    },
+    {
+      "id": "10xgrowth-setup-guide",
+      "content": "Create 10xGrowth developer setup guide using TalentExcel template",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 22:25 IST",
+      "dependencies": [],
+      "source": "sunday-tasks"
+    },
+    {
+      "id": "sasarjan-landing-prompt1",
+      "content": "PROMPT 1: Core Landing Page Enhancement - Hero, showcase, bundles, metrics (2-3 hrs)",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 23:30 IST",
+      "dependencies": [],
+      "notes": "See /plan/claude-todos/sasarjan-landing-prompt-guide.md for full prompt",
+      "estimatedTime": "2-3 hours"
+    },
+    {
+      "id": "sasarjan-landing-prompt2",
+      "content": "PROMPT 2: Interactive Components - ProsperityWheel, LocationMap, BundleCalculator (1-2 hrs)",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 23:30 IST",
+      "dependencies": [],
+      "notes": "Can combine with PROMPT 1 or run parallel",
+      "estimatedTime": "1-2 hours"
+    },
+    {
+      "id": "sasarjan-landing-prompt3",
+      "content": "PROMPT 3: Bundle System Implementation - Routes, pages, data structure (2 hrs)",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 23:30 IST",
+      "dependencies": [],
+      "notes": "Can be done by Terminal 2 in parallel",
+      "estimatedTime": "2 hours"
+    },
+    {
+      "id": "sasarjan-landing-prompt4",
+      "content": "PROMPT 4: Location Features - Auto-detect, filtering, location pages (1 hr)",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "07-Jul-2025 23:30 IST",
+      "dependencies": ["location-schema", "location-service"],
+      "notes": "Hold until location system ready",
+      "estimatedTime": "1 hour"
+    },
+    {
+      "id": "sasarjan-landing-prompt5",
+      "content": "PROMPT 5: Performance & Polish - Optimization, SEO, analytics, a11y (1 hr)",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "07-Jul-2025 23:30 IST",
+      "dependencies": [
+        "sasarjan-landing-prompt1",
+        "sasarjan-landing-prompt2",
+        "sasarjan-landing-prompt3"
+      ],
+      "notes": "Final optimization step",
+      "estimatedTime": "1 hour"
+    },
+    {
+      "id": "location-schema",
+      "content": "Create location database schema with hierarchical structure (continent → country → region → state → district → taluka → block → village → locality)",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 08:20 IST",
+      "dependencies": ["location-data-decision"]
+    },
+    {
+      "id": "dev-environment-checklist",
+      "content": "Create development environment checklist for all 3 apps",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 22:25 IST",
+      "dependencies": [],
+      "source": "archive-todo"
+    },
+    {
+      "id": "automation-planning",
+      "content": "Categorize automation tasks by team (Claude AI, Central, Developers)",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "07-Jul-2025 22:25 IST",
+      "dependencies": [],
+      "source": "archive-todo"
+    },
+    {
+      "id": "vitest-plop-setup",
+      "content": "Set up Vitest/Plop.js foundation for rapid development",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "07-Jul-2025 22:25 IST",
+      "dependencies": [],
+      "source": "archive-todo"
+    },
+    {
+      "id": "component-library-structure",
+      "content": "Build shared UI component library structure",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "07-Jul-2025 22:25 IST",
+      "dependencies": [],
+      "source": "sunday-tasks"
+    },
+    {
+      "id": "api-documentation-templates",
+      "content": "Create API documentation templates for all apps",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "07-Jul-2025 22:25 IST",
+      "dependencies": [],
+      "source": "sunday-tasks"
+    },
+    {
+      "id": "location-migration",
+      "content": "Create database migration for locations, user_locations, app_locations, and location_hierarchies tables",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 08:20 IST",
+      "dependencies": ["location-schema"]
+    },
+    {
+      "id": "postgis-setup",
+      "content": "Set up PostGIS extension for geographic queries and spatial indexes",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 08:20 IST",
+      "dependencies": ["location-migration"]
+    },
+    {
+      "id": "india-seed-data",
+      "content": "Import India states, districts, and major cities seed data",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 08:20 IST",
+      "dependencies": ["location-migration", "location-data-decision"]
+    },
+    {
+      "id": "location-types",
+      "content": "Update database TypeScript types to include location tables and enums",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "07-Jul-2025 08:20 IST",
+      "dependencies": ["location-schema"]
+    },
+    {
+      "id": "location-service",
+      "content": "Build location service utilities for hierarchical queries and searches",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "07-Jul-2025 08:20 IST",
+      "dependencies": ["location-types"]
+    },
+    {
+      "id": "location-picker",
+      "content": "Create reusable location picker component with hierarchical selection",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "07-Jul-2025 08:20 IST",
+      "dependencies": ["location-service"]
+    },
+    {
+      "id": "bundle-schema",
+      "content": "Create app bundling database schema for micro-app bundles with location filters",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 08:20 IST",
+      "dependencies": ["bundle-pricing-decision"]
+    },
+    {
+      "id": "bundle-migration",
+      "content": "Create database migration for app_bundles, bundle_apps, and bundle_locations tables",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 08:20 IST",
+      "dependencies": ["bundle-schema"]
+    },
+    {
+      "id": "testing-strategy",
+      "content": "Create comprehensive testing strategy document (unit, integration, E2E)",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "07-Jul-2025 22:25 IST",
+      "dependencies": [],
+      "source": "sunday-tasks"
+    },
+    {
+      "id": "security-infrastructure-gaps",
+      "content": "Address critical security infrastructure gaps (2FA, malware scanning, audit logging)",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "07-Jul-2025 22:25 IST",
+      "dependencies": [],
+      "source": "critical-gaps-analysis",
+      "notes": "Found in critical-gaps-analysis.md - needs immediate attention"
+    },
+    {
+      "id": "map-integration",
+      "content": "Research and integrate open source map solution (MapLibre/Leaflet with OSM)",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "07-Jul-2025 08:20 IST",
+      "dependencies": ["map-provider-decision"]
+    },
+    {
+      "id": "location-autocomplete",
+      "content": "Implement location search and autocomplete functionality",
+      "status": "pending",
+      "priority": "low",
+      "createdAt": "07-Jul-2025 08:20 IST",
+      "dependencies": ["location-service", "map-integration"]
+    },
+    {
+      "id": "user-profile-locations",
+      "content": "Update user profile to support multiple home/work locations with custom titles",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "07-Jul-2025 08:20 IST",
+      "dependencies": ["location-schema", "location-picker"]
+    }
+  ],
+  "completedTodos": [
+    {
+      "id": "sprint-setup",
+      "content": "Create Week 1 sprint session log and update sprint tracking",
+      "completedAt": "07-Jul-2025 08:30 IST"
+    },
+    {
+      "id": "decision-system",
+      "content": "Create central decision tracking system in /plan/decisions/",
+      "completedAt": "07-Jul-2025 08:35 IST"
+    },
+    {
+      "id": "date-correction",
+      "content": "Fix all July 8 date references to July 7",
+      "completedAt": "07-Jul-2025 08:45 IST"
+    },
+    {
+      "id": "summary-system",
+      "content": "Create automated prompt and summary tracking system",
+      "completedAt": "07-Jul-2025 08:50 IST"
+    },
+    {
+      "id": "developer-onboarding",
+      "content": "Update developer onboarding with location awareness and complete lifecycle",
+      "completedAt": "07-Jul-2025 09:30 IST"
+    },
+    {
+      "id": "talentexcel-setup-guide",
+      "content": "Create TalentExcel developer setup guide",
+      "completedAt": "05-Jul-2025 17:40 IST",
+      "source": "existing-file"
+    },
+    {
+      "id": "documentation-reorganization",
+      "content": "Reorganize documentation and create scalable automation system",
+      "completedAt": "05-Jul-2025 18:00 IST",
+      "source": "session-log"
+    },
+    {
+      "id": "team-structure-documentation",
+      "content": "Create team-based documentation structure (plan/teams/)",
+      "completedAt": "05-Jul-2025 18:00 IST",
+      "source": "existing-structure"
+    },
+    {
+      "id": "claude-ai-guidelines",
+      "content": "Create Claude AI session guidelines and documentation standards",
+      "completedAt": "05-Jul-2025 17:20 IST",
+      "source": "existing-file"
+    },
+    {
+      "id": "automation-docs-partial",
+      "content": "Create initial automation documentation (github, testing, naming)",
+      "completedAt": "05-Jul-2025 IST",
+      "source": "existing-files",
+      "notes": "Partial completion - some automation tasks still pending"
+    },
+    {
+      "id": "todo-consolidation",
+      "content": "Consolidate 55+ scattered tasks from 4 different systems and create unified priority list",
+      "completedAt": "07-Jul-2025, Monday 22:45 IST",
+      "source": "this-session"
+    },
+    {
+      "id": "multi-terminal-sync",
+      "content": "Create multi-terminal Claude sync system for task coordination",
+      "completedAt": "07-Jul-2025, Monday 22:55 IST",
+      "source": "this-session"
+    }
+  ],
+  "blockedBy": {
+    "location-data-decision": {
+      "description": "CEO needs to decide between importing all 600k villages or 50k+ cities only",
+      "dueBy": "07-Jul-2025 12:00 IST"
+    },
+    "map-provider-decision": {
+      "description": "CEO needs to choose between Mapbox ($200/month) or OpenStreetMap (free)",
+      "dueBy": "08-Jul-2025 EOD"
+    },
+    "bundle-pricing-decision": {
+      "description": "CEO needs to decide bundle pricing model and developer revenue share",
+      "dueBy": "11-Jul-2025"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+import { renderHook, act } from '@testing-library/react';
+import { use{{pascalCase name}} } from './use{{pascalCase name}}';
+
+describe('use{{pascalCase name}}', () => {
+  it('initializes with default values', () => {
+    const { result } = renderHook(() => use{{pascalCase name}}());
+    
+    expect(result.current.data).toBeNull();
+    expect(result.current.loading).toBe(false);
+    expect(result.current.error).toBeNull();
+  });
+
+  it('handles loading state correctly', async () => {
+    const { result } = renderHook(() => use{{pascalCase name}}());
+    
+    // Test loading behavior
+    act(() => {
+      // Trigger loading action
+    });
+    
+    expect(result.current.loading).toBe(true);
+  });
+
+  it('handles error state correctly', async () => {
+    const { result } = renderHook(() => use{{pascalCase name}}());
+    
+    // Test error handling
+    act(() => {
+      // Trigger error condition
+    });
+    
+    expect(result.current.error).toBeDefined();
+  });
+});

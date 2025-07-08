@@ -1,0 +1,138 @@
+name: Scheduled Tasks
+
+on:
+  schedule:
+    # Run security scan daily at 2 AM UTC
+    - cron: '0 2 * * *'
+    # Run dependency updates weekly on Sunday at 3 AM UTC
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+
+jobs:
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Run npm audit
+        run: |
+          pnpm audit --audit-level=high
+        continue-on-error: true
+
+  dependency-update:
+    name: Dependency Updates
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '0 3 * * 0' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Update dependencies
+        run: |
+          pnpm update --interactive=false
+          pnpm install
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: update dependencies'
+          title: 'Weekly Dependency Updates'
+          body: |
+            ## Weekly Dependency Updates
+            
+            This PR contains the latest dependency updates.
+            
+            ### What changed?
+            - Updated npm dependencies to their latest versions
+            - Resolved any security vulnerabilities
+            
+            ### Checklist
+            - [ ] Tests pass
+            - [ ] Build succeeds
+            - [ ] No breaking changes
+          branch: deps/weekly-update
+          delete-branch: true
+
+  lighthouse-audit:
+    name: Lighthouse Performance Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build application
+        run: pnpm build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            http://localhost:3000
+            http://localhost:3000/apps
+            http://localhost:3000/developer
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+  backup-database:
+    name: Backup Database
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '0 2 * * *' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Backup Supabase Database
+        run: |
+          # Install Supabase CLI
+          npm install -g supabase
+          
+          # Create backup
+          supabase db dump --db-url=${{ secrets.DATABASE_URL }} > backup-$(date +%Y%m%d).sql
+          
+          # Upload to secure storage (configure your preferred storage)
+          # Example: Upload to S3, Google Cloud Storage, etc.
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}

@@ -1,0 +1,39 @@
+/**
+ * {{pascalCase name}} type definitions
+ */
+
+export interface {{pascalCase name}} {
+  id: string;
+  // Add your type properties here
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface {{pascalCase name}}CreateInput {
+  // Properties for creating a new {{pascalCase name}}
+}
+
+export interface {{pascalCase name}}UpdateInput {
+  // Properties for updating a {{pascalCase name}}
+}
+
+export interface {{pascalCase name}}Filter {
+  // Properties for filtering {{pascalCase name}} queries
+}
+
+// Enums related to {{pascalCase name}}
+export enum {{pascalCase name}}Status {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  PENDING = 'PENDING',
+}
+
+// Type guards
+export function is{{pascalCase name}}(value: unknown): value is {{pascalCase name}} {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'id' in value &&
+    typeof (value as any).id === 'string'
+  );
+}

@@ -1,0 +1,31 @@
+import { {{camelCase name}}, is{{pascalCase name}}Valid, {{constantCase name}}_CONFIG } from './{{kebabCase name}}';
+
+describe('{{camelCase name}}', () => {
+  it('processes input correctly', () => {
+    const input = 'test';
+    const result = {{camelCase name}}(input);
+    
+    expect(result).toBe(input);
+  });
+
+  it('handles edge cases', () => {
+    expect({{camelCase name}}(null)).toBe(null);
+    expect({{camelCase name}}(undefined)).toBe(undefined);
+  });
+});
+
+describe('is{{pascalCase name}}Valid', () => {
+  it('validates correct input', () => {
+    expect(is{{pascalCase name}}Valid('valid')).toBe(true);
+  });
+
+  it('rejects invalid input', () => {
+    expect(is{{pascalCase name}}Valid(null)).toBe(false);
+  });
+});
+
+describe('{{constantCase name}}_CONFIG', () => {
+  it('has required configuration', () => {
+    expect({{constantCase name}}_CONFIG).toBeDefined();
+  });
+});

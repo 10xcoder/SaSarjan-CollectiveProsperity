@@ -1,0 +1,21 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '{{titleCase name}} | SaSarjan App Store',
+  description: '{{titleCase name}} page description',
+};
+
+export default function {{pascalCase name}}Page() {
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6">
+        {{titleCase name}}
+      </h1>
+      
+      <div className="space-y-4">
+        {/* Add your page content here */}
+        <p>Welcome to the {{name}} page.</p>
+      </div>
+    </div>
+  );
+}

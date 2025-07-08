@@ -1,0 +1,217 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Please provide as much detail as possible to help us understand your request.
+
+  - type: checkboxes
+    id: initial-checks
+    attributes:
+      label: Initial Checks
+      description: Please confirm you have done the following
+      options:
+        - label: I have searched existing issues and this feature hasn't been requested
+          required: true
+        - label: I have checked the roadmap and this isn't already planned
+          required: true
+        - label: This feature aligns with collective prosperity goals
+          required: true
+
+  - type: dropdown
+    id: app
+    attributes:
+      label: Which app should this feature be added to?
+      description: Select the target app for this feature
+      options:
+        - Web (main platform)
+        - TalentExcel
+        - SevaPremi
+        - 10xGrowth
+        - Admin
+        - Multiple apps
+        - New shared component/package
+      default: 0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Feature Priority
+      description: How important is this feature?
+      options:
+        - Low - Nice to have
+        - Medium - Would improve user experience
+        - High - Important for user satisfaction
+        - Critical - Essential for platform success
+      default: 1
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Feature Summary
+      description: A clear and concise description of the feature
+      placeholder: What feature would you like to see?
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve?
+      placeholder: What problem or pain point does this address?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How would you like this feature to work?
+      placeholder: Describe your ideal solution
+    validations:
+      required: true
+
+  - type: textarea
+    id: user-stories
+    attributes:
+      label: User Stories
+      description: Describe how different users would interact with this feature
+      placeholder: |
+        As a [user type], I want [functionality] so that [benefit].
+        
+        Example:
+        As a job seeker, I want to save job listings so that I can review them later.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What criteria must be met for this feature to be considered complete?
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups/Wireframes
+      description: Attach or describe any visual designs for this feature
+      placeholder: Add links to designs, sketches, or detailed descriptions of the UI
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Implementation Complexity
+      description: How complex do you think this feature would be to implement?
+      options:
+        - Simple - Can be done in a day
+        - Medium - Requires a few days of work
+        - Complex - Needs a week or more
+        - Very Complex - Major feature requiring multiple sprints
+        - Not sure
+      default: 4
+
+  - type: checkboxes
+    id: prosperity-alignment
+    attributes:
+      label: Collective Prosperity Alignment
+      description: Which prosperity categories does this feature support? (Check all that apply)
+      options:
+        - label: Personal Transformation - Helps individuals grow and develop
+        - label: Organizational Excellence - Improves business and organizational outcomes
+        - label: Community Resilience - Strengthens community bonds and cooperation
+        - label: Ecological Regeneration - Supports environmental sustainability
+        - label: Economic Empowerment - Creates economic opportunities and growth
+        - label: Knowledge Commons - Facilitates knowledge sharing and learning
+        - label: Social Innovation - Promotes innovative solutions to social challenges
+        - label: Cultural Expression - Supports cultural diversity and creativity
+
+  - type: textarea
+    id: prosperity-explanation
+    attributes:
+      label: Prosperity Impact Explanation
+      description: Explain how this feature contributes to collective prosperity
+      placeholder: Describe the positive impact this feature would have on individuals, organizations, and communities
+
+  - type: dropdown
+    id: sprint-timing
+    attributes:
+      label: Sprint Timing
+      description: When would you like to see this feature implemented?
+      options:
+        - Current sprint (urgent)
+        - Next sprint
+        - Within next 2-3 sprints
+        - Within current quarter
+        - Future consideration
+        - No specific timeline
+      default: 5
+
+  - type: input
+    id: related-features
+    attributes:
+      label: Related Features/Issues
+      description: List any related features or issues
+      placeholder: "#123, #456"
+
+  - type: textarea
+    id: technical-considerations
+    attributes:
+      label: Technical Considerations
+      description: Any technical requirements, constraints, or considerations?
+      placeholder: |
+        - API integrations needed
+        - Database schema changes
+        - Performance considerations
+        - Security requirements
+        - Third-party dependencies
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions
+      description: Have you considered any alternative approaches?
+      placeholder: Describe any alternative solutions you've considered
+
+  - type: checkboxes
+    id: team-impact
+    attributes:
+      label: Team Impact
+      description: Which teams would be involved in implementing this feature?
+      options:
+        - label: Claude AI Team (automated implementation)
+        - label: Central Team (architecture and core development)
+        - label: Independent Developers (community modules)
+        - label: Design Team (UI/UX design)
+        - label: QA Team (testing and validation)
+
+  - type: textarea
+    id: success-metrics
+    attributes:
+      label: Success Metrics
+      description: How would you measure the success of this feature?
+      placeholder: |
+        - User engagement metrics
+        - Performance improvements
+        - User satisfaction scores
+        - Business impact metrics
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other information that would be helpful
+      placeholder: Screenshots, references, inspiration, research, etc.

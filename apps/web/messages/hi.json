@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "title": "सासर्जन एप स्टोर - सामूहिक समृद्धि मंच",
+    "description": "विकास के लिए डिजिटल और भौतिक दुनिया को जोड़ने वाला एक मजबूत तकनीकी मंच बनाना"
+  },
+  "nav": {
+    "home": "मुखपृष्ठ",
+    "apps": "एप्स",
+    "developer": "डेवलपर",
+    "dashboard": "डैशबोर्ड",
+    "profile": "प्रोफाइल",
+    "settings": "सेटिंग्स"
+  },
+  "home": {
+    "title": "सासर्जन एप स्टोर",
+    "subtitle": "विकास के लिए डिजिटल और भौतिक दुनिया को जोड़ने वाला एक मजबूत तकनीकी मंच बनाना",
+    "exploreApps": "एप्स देखें",
+    "forDevelopers": "डेवलपर्स के लिए"
+  },
+  "common": {
+    "loading": "लोड हो रहा है...",
+    "error": "कुछ गलत हुआ",
+    "tryAgain": "पुनः प्रयास करें",
+    "save": "सेव करें",
+    "cancel": "रद्द करें",
+    "continue": "जारी रखें",
+    "back": "वापस",
+    "next": "अगला",
+    "previous": "पिछला",
+    "close": "बंद करें",
+    "open": "खोलें",
+    "search": "खोजें",
+    "filter": "फिल्टर",
+    "sort": "सॉर्ट"
+  },
+  "offline": {
+    "title": "आप ऑफलाइन हैं",
+    "description": "ऐसा लगता है कि आपका इंटरनेट कनेक्शन चला गया है। आप वापस ऑनलाइन होने तक कुछ सुविधाएं अनुपलब्ध हो सकती हैं।",
+    "canStill": "आप अभी भी कर सकते हैं:",
+    "features": {
+      "cache": "पहले से cached एप्स देखें",
+      "favorites": "अपने saved favorites देखें",
+      "content": "downloaded content पढ़ें"
+    }
+  },
+  "categories": {
+    "personal_transformation": "व्यक्तिगत परिवर्तन",
+    "organizational_excellence": "संगठनात्मक उत्कृष्टता",
+    "community_resilience": "सामुदायिक लचीलापन",
+    "ecological_regeneration": "पारिस्थितिक पुनर्जनन",
+    "economic_empowerment": "आर्थिक सशक्तिकरण",
+    "knowledge_commons": "ज्ञान सामान्य",
+    "social_innovation": "सामाजिक नवाचार",
+    "cultural_expression": "सांस्कृतिक अभिव्यक्ति"
+  }
+}

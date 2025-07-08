@@ -1,0 +1,187 @@
+name: 🚨 Sprint Blocker
+description: Report an issue that blocks current sprint goals
+title: "[BLOCKER]: "
+labels: ["sprint-blocker", "urgent", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **⚠️ URGENT: Sprint Blocker**
+        
+        This template is for issues that block current sprint deliverables and require immediate attention.
+
+  - type: input
+    id: sprint-info
+    attributes:
+      label: Sprint Information
+      description: Current sprint details
+      placeholder: "Week X (YYYY-MM-DD to YYYY-MM-DD)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: blocked-todos
+    attributes:
+      label: Blocked Todo Items
+      description: List all todo items that are blocked by this issue
+      placeholder: |
+        - todo-123: Create user profile component
+        - todo-456: Implement payment processing
+        - todo-789: Set up database migrations
+    validations:
+      required: true
+
+  - type: dropdown
+    id: blocker-type
+    attributes:
+      label: Blocker Type
+      description: What type of blocker is this?
+      options:
+        - Technical dependency missing
+        - External service/API issue
+        - Credentials/access needed
+        - Architecture decision required
+        - Resource/team dependency
+        - Environment/infrastructure issue
+        - Third-party integration problem
+        - Security review needed
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: blocker-description
+    attributes:
+      label: Blocker Description
+      description: Detailed description of what is blocking progress
+      placeholder: Explain exactly what is preventing work from continuing
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact-level
+    attributes:
+      label: Impact Level
+      description: How severe is this blocker?
+      options:
+        - Complete stoppage - No work can continue
+        - Major impact - Multiple tasks blocked
+        - Moderate impact - Some tasks blocked
+        - Minor impact - Workaround available
+      default: 0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: affected-teams
+    attributes:
+      label: Affected Teams
+      description: Which teams are impacted by this blocker?
+      multiple: true
+      options:
+        - Claude AI Team
+        - Central Team
+        - Independent Developers
+        - All teams
+    validations:
+      required: true
+
+  - type: textarea
+    id: sprint-goals-impact
+    attributes:
+      label: Sprint Goals Impact
+      description: How does this blocker affect sprint goals?
+      placeholder: |
+        Which sprint goals are at risk?
+        What deliverables might be missed?
+        What dependencies are affected?
+    validations:
+      required: true
+
+  - type: textarea
+    id: immediate-needs
+    attributes:
+      label: Immediate Needs
+      description: What is needed to unblock this issue?
+      placeholder: |
+        - Specific credentials needed
+        - Team decisions required
+        - External vendor actions
+        - Architecture reviews
+        - Resource allocation
+    validations:
+      required: true
+
+  - type: input
+    id: escalation-contact
+    attributes:
+      label: Escalation Contact
+      description: Who should be notified immediately?
+      placeholder: "@username or team lead"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: resolution-urgency
+    attributes:
+      label: Resolution Urgency
+      description: When does this need to be resolved?
+      options:
+        - Within 4 hours (critical path)
+        - Within 24 hours (sprint at risk)
+        - Within 48 hours (can adjust sprint scope)
+        - By end of sprint
+      default: 0
+    validations:
+      required: true
+
+  - type: textarea
+    id: workarounds
+    attributes:
+      label: Potential Workarounds
+      description: Are there any temporary workarounds available?
+      placeholder: Describe any ways to work around this blocker temporarily
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: What other work depends on resolving this blocker?
+      placeholder: |
+        List all downstream tasks and deliverables that depend on this resolution
+
+  - type: checkboxes
+    id: escalation-actions
+    attributes:
+      label: Escalation Actions Taken
+      description: What escalation steps have already been taken?
+      options:
+        - label: Team lead notified
+        - label: Slack/Discord message sent
+        - label: Email escalation sent
+        - label: Alternative solutions explored
+        - label: Stakeholders informed
+        - label: Sprint adjustments considered
+
+  - type: textarea
+    id: resolution-plan
+    attributes:
+      label: Proposed Resolution Plan
+      description: If you have ideas for resolution, please share them
+      placeholder: |
+        Step-by-step plan to resolve this blocker
+        Who needs to be involved
+        Timeline for resolution
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any other relevant information
+      placeholder: |
+        Error messages, logs, screenshots
+        Previous attempts to resolve
+        Related issues or PRs
+        External dependencies

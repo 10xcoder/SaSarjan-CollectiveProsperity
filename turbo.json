@@ -1,0 +1,91 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "remoteCache": {
+    "enabled": true
+  },
+  "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "NODE_ENV",
+    "VERCEL_ENV",
+    "VERCEL_URL",
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "env": [
+        "NEXT_PUBLIC_APP_URL",
+        "NEXT_PUBLIC_APP_NAME",
+        "NEXT_PUBLIC_APP_ID",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "RAZORPAY_KEY_ID",
+        "RAZORPAY_KEY_SECRET",
+        "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN",
+        "NEXT_PUBLIC_ADMIN_ROLE_ID",
+        "NEXT_PUBLIC_REQUIRE_ADMIN_AUTH"
+      ]
+    },
+    "dev": {
+      "persistent": true,
+      "cache": false
+    },
+    "dev:web": {
+      "persistent": true,
+      "cache": false,
+      "dependsOn": []
+    },
+    "dev:talentexcel": {
+      "persistent": true,
+      "cache": false,
+      "dependsOn": []
+    },
+    "dev:sevapremi": {
+      "persistent": true,
+      "cache": false,
+      "dependsOn": []
+    },
+    "dev:10xgrowth": {
+      "persistent": true,
+      "cache": false,
+      "dependsOn": []
+    },
+    "dev:admin": {
+      "persistent": true,
+      "cache": false,
+      "dependsOn": []
+    },
+    "lint": {
+      "dependsOn": ["^build"]
+    },
+    "typecheck": {
+      "dependsOn": ["^build"]
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "env": ["NODE_ENV"]
+    },
+    "test:unit": {
+      "dependsOn": ["^build"],
+      "env": ["NODE_ENV"]
+    },
+    "test:watch": {
+      "persistent": true,
+      "cache": false,
+      "dependsOn": ["^build"],
+      "env": ["NODE_ENV"]
+    },
+    "test:coverage": {
+      "dependsOn": ["^build"],
+      "env": ["NODE_ENV"]
+    },
+    "test:e2e": {
+      "dependsOn": ["build"],
+      "env": ["NODE_ENV"]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

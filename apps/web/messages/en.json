@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "title": "SaSarjan App Store - Collective Prosperity Platform",
+    "description": "Building a robust technology platform for digital and physical worlds to unite for growth"
+  },
+  "nav": {
+    "home": "Home",
+    "apps": "Apps",
+    "developer": "Developer",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "home": {
+    "title": "SaSarjan App Store",
+    "subtitle": "Building a robust technology platform for digital and physical worlds to unite for growth",
+    "exploreApps": "Explore Apps",
+    "forDevelopers": "For Developers"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "tryAgain": "Try Again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "open": "Open",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort"
+  },
+  "offline": {
+    "title": "You're Offline",
+    "description": "It looks like you've lost your internet connection. Some features may be unavailable until you're back online.",
+    "canStill": "You can still:",
+    "features": {
+      "cache": "View previously cached apps",
+      "favorites": "Access your saved favorites",
+      "content": "Read downloaded content"
+    }
+  },
+  "categories": {
+    "personal_transformation": "Personal Transformation",
+    "organizational_excellence": "Organizational Excellence",
+    "community_resilience": "Community Resilience",
+    "ecological_regeneration": "Ecological Regeneration",
+    "economic_empowerment": "Economic Empowerment",
+    "knowledge_commons": "Knowledge Commons",
+    "social_innovation": "Social Innovation",
+    "cultural_expression": "Cultural Expression"
+  }
+}

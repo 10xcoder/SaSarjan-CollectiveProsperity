@@ -1,0 +1,57 @@
+# WSL2 Configuration Template
+# Save this file as: C:\Users\[YourUsername]\.wslconfig
+# 
+# This configuration optimizes WSL2 for development with VSCode Remote-WSL
+# and helps prevent crashes and connection drops.
+#
+# Instructions:
+# 1. Copy this file to C:\Users\[YourUsername]\.wslconfig
+# 2. Replace [YourUsername] with your actual Windows username
+# 3. Adjust values based on your system specs
+# 4. Restart WSL with: wsl --shutdown (in PowerShell)
+
+[wsl2]
+# Memory allocation for WSL2
+# Set to 50-75% of your total RAM for best performance
+# Example: If you have 16GB RAM, use 8GB-12GB
+memory=8GB
+
+# CPU cores for WSL2
+# Set to number of physical cores minus 1 or 2
+# Example: If you have 8 cores, use 4-6
+processors=4
+
+# Swap size for WSL2
+# Helps prevent out-of-memory issues
+swap=2GB
+
+# Disable page reporting to reduce overhead
+pageReporting=false
+
+# Enable nested virtualization (for Docker)
+nestedVirtualization=true
+
+# Localhost forwarding
+# Ensures stable connection between Windows and WSL2
+localhostForwarding=true
+
+# GUI applications support (if needed)
+guiApplications=false
+
+# Virtual disk size limit
+# Prevents WSL2 from consuming all disk space
+# Default is 256GB, adjust as needed
+# diskSizeGB=128
+
+# Additional performance settings
+kernelCommandLine = vsyscall=emulate
+
+# Network settings for better stability
+# Uncomment if experiencing network issues
+# networkingMode=mirrored
+# dnsTunneling=true
+# firewall=false
+# autoProxy=false
+
+# Debug settings (only enable if troubleshooting)
+# debugConsole=true

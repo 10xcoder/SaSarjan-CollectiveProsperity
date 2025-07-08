@@ -1,0 +1,103 @@
+{
+  "name": "@sasarjan/job-board",
+  "version": "1.0.0",
+  "description": "Reusable job board and talent marketplace module for SaSarjan apps - fostering economic empowerment through opportunity matching",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix"
+  },
+  "keywords": [
+    "job-board",
+    "freelancer",
+    "marketplace",
+    "talent",
+    "hiring",
+    "employment",
+    "gig-economy",
+    "career",
+    "opportunities",
+    "economic-empowerment",
+    "sasarjan"
+  ],
+  "author": "SaSarjan Team",
+  "license": "MIT",
+  "dependencies": {
+    "@sasarjan/database": "workspace:*",
+    "@sasarjan/profile-core": "workspace:*",
+    "@supabase/supabase-js": "^2.38.0",
+    "zod": "^3.22.0",
+    "nanoid": "^5.0.4",
+    "date-fns": "^2.30.0",
+    "fuse.js": "^7.0.0",
+    "ml-matrix": "^6.10.4",
+    "natural": "^6.7.0",
+    "compromise": "^14.10.0",
+    "lodash": "^4.17.21",
+    "currency.js": "^2.0.4",
+    "validator": "^13.11.0",
+    "mime-types": "^2.1.35"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/lodash": "^4.14.200",
+    "@types/validator": "^13.11.0",
+    "@types/mime-types": "^2.1.4",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "eslint": "^8.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./api": {
+      "types": "./dist/api/index.d.ts",
+      "import": "./dist/api/index.js",
+      "require": "./dist/api/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js",
+      "require": "./dist/types/index.js"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js",
+      "require": "./dist/components/index.js"
+    },
+    "./matching": {
+      "types": "./dist/matching/index.d.ts",
+      "import": "./dist/matching/index.js",
+      "require": "./dist/matching/index.js"
+    },
+    "./analytics": {
+      "types": "./dist/analytics/index.d.ts",
+      "import": "./dist/analytics/index.js",
+      "require": "./dist/analytics/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js",
+      "require": "./dist/utils/index.js"
+    }
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ]
+}

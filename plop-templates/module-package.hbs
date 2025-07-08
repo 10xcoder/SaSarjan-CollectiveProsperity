@@ -1,0 +1,35 @@
+{
+  "name": "@sasarjan/{{name}}",
+  "version": "0.0.1",
+  "description": "{{titleCase name}} module for SaSarjan App Store",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup index.ts --format cjs,esm --dts",
+    "dev": "tsup index.ts --format cjs,esm --dts --watch",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "dependencies": {
+    "@sasarjan/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "eslint": "^8",
+    "jest": "^29",
+    "tsup": "^8",
+    "typescript": "^5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "sasarjan",
+    "{{name}}"
+  ]
+}

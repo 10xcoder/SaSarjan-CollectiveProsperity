@@ -1,0 +1,354 @@
+name: Quality Gates
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+jobs:
+  # Commit message validation
+  commit-validation:
+    name: Validate Commits
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install commitlint
+        run: npm install -g @commitlint/cli @commitlint/config-conventional
+
+      - name: Validate commit messages
+        run: |
+          npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+  # Code coverage and quality
+  code-coverage:
+    name: Code Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run tests with coverage
+        run: pnpm test:coverage
+        env:
+          CI: true
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/lcov.info
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true
+
+      - name: Coverage threshold check
+        run: |
+          COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
+          THRESHOLD=80
+          if (( $(echo "$COVERAGE < $THRESHOLD" | bc -l) )); then
+            echo "❌ Coverage $COVERAGE% is below threshold $THRESHOLD%"
+            exit 1
+          fi
+          echo "✅ Coverage $COVERAGE% meets threshold $THRESHOLD%"
+
+  # Enhanced security scanning
+  security-enhanced:
+    name: Enhanced Security Scan
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run security audit
+        run: |
+          pnpm audit --audit-level=moderate
+          if [ $? -ne 0 ]; then
+            echo "❌ Security vulnerabilities found"
+            exit 1
+          fi
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH,MEDIUM'
+          exit-code: '1'
+
+      - name: Upload Trivy scan results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Dependency vulnerability check
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+
+  # Bundle size analysis
+  bundle-analysis:
+    name: Bundle Size Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build applications
+        run: pnpm build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          NODE_ENV: production
+
+      - name: Analyze bundle size
+        uses: nextjs-bundle-analysis/bundle-analyzer@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment: true
+
+      - name: Bundle size check
+        run: |
+          # Check bundle sizes for each app
+          for app in web talentexcel sevapremi 10xgrowth admin; do
+            if [ -d "apps/$app/.next" ]; then
+              SIZE=$(du -sh apps/$app/.next/static | cut -f1)
+              echo "Bundle size for $app: $SIZE"
+              
+              # Set size limits (in MB)
+              case $app in
+                web) LIMIT=5 ;;
+                *) LIMIT=3 ;;
+              esac
+              
+              # Convert size to MB for comparison
+              SIZE_MB=$(du -sm apps/$app/.next/static | cut -f1)
+              if [ $SIZE_MB -gt $LIMIT ]; then
+                echo "❌ Bundle size for $app ($SIZE_MB MB) exceeds limit ($LIMIT MB)"
+                exit 1
+              fi
+              echo "✅ Bundle size for $app is within limits"
+            fi
+          done
+
+  # Performance benchmarks
+  performance-audit:
+    name: Performance Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build and start application
+        run: |
+          pnpm build
+          pnpm start &
+          sleep 10
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            http://localhost:3000
+            http://localhost:3000/apps
+            http://localhost:3000/developer
+          configPath: '.lighthouserc.json'
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+  # Accessibility testing
+  accessibility-audit:
+    name: Accessibility Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build application
+        run: pnpm build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run accessibility tests
+        run: pnpm test:a11y
+
+      - name: Upload accessibility report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: accessibility-report
+          path: accessibility-report/
+
+  # Code quality checks
+  code-quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run ESLint with quality metrics
+        run: |
+          pnpm lint --format=json --output-file=eslint-report.json
+          pnpm lint --format=stylish
+
+      - name: Run Prettier check
+        run: pnpm format:check
+
+      - name: Check naming conventions
+        run: |
+          # Check for proper file naming conventions
+          echo "Checking file naming conventions..."
+          
+          # Check for PascalCase components
+          INVALID_COMPONENTS=$(find apps/*/src/components -name "*.tsx" | grep -v -E "/[A-Z][a-zA-Z0-9]*\.tsx$" || true)
+          if [ -n "$INVALID_COMPONENTS" ]; then
+            echo "❌ Invalid component names (should be PascalCase.tsx):"
+            echo "$INVALID_COMPONENTS"
+            exit 1
+          fi
+          
+          # Check for kebab-case utilities
+          INVALID_UTILS=$(find apps/*/src/utils -name "*.ts" | grep -E "[A-Z]" || true)
+          if [ -n "$INVALID_UTILS" ]; then
+            echo "❌ Invalid utility names (should be kebab-case.ts):"
+            echo "$INVALID_UTILS"
+            exit 1
+          fi
+          
+          echo "✅ All file naming conventions passed"
+
+      - name: Check for TODO comments
+        run: |
+          TODO_COUNT=$(grep -r "TODO\|FIXME\|HACK" apps/ --include="*.ts" --include="*.tsx" | wc -l || echo "0")
+          if [ $TODO_COUNT -gt 10 ]; then
+            echo "❌ Too many TODO comments ($TODO_COUNT). Consider creating issues."
+            exit 1
+          fi
+          echo "✅ TODO comment count is acceptable ($TODO_COUNT)"
+
+      - name: Complexity analysis
+        run: |
+          # Check for overly complex functions
+          npx madge --circular --format=json apps/ > complexity-report.json
+          CIRCULAR_DEPS=$(cat complexity-report.json | jq length)
+          if [ $CIRCULAR_DEPS -gt 0 ]; then
+            echo "❌ Circular dependencies found: $CIRCULAR_DEPS"
+            cat complexity-report.json | jq .
+            exit 1
+          fi
+          echo "✅ No circular dependencies found"

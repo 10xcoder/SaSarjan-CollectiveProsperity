@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Lint commit message with commitlint
+npx --no-install commitlint --edit "$1"
+
+# Validate sprint and todo integration
+node .husky/scripts/validate-commit-integration.js "$1"

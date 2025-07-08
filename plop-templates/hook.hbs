@@ -1,0 +1,44 @@
+import { useState, useEffect, useCallback } from 'react';
+
+interface Use{{pascalCase name}}Options {
+  // Define your hook options here
+}
+
+interface Use{{pascalCase name}}Return {
+  // Define your return type here
+  data: any | null;
+  loading: boolean;
+  error: Error | null;
+}
+
+/**
+ * use{{pascalCase name}} - Custom hook for {{name}}
+ * 
+ * @param options - Hook configuration options
+ * @returns Hook state and methods
+ * 
+ * @example
+ * ```tsx
+ * const { data, loading, error } = use{{pascalCase name}}({
+ *   // options
+ * });
+ * ```
+ */
+export const use{{pascalCase name}} = (
+  options: Use{{pascalCase name}}Options = {}
+): Use{{pascalCase name}}Return => {
+  const [data, setData] = useState<any | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  // Add your hook logic here
+  useEffect(() => {
+    // Effect logic
+  }, []);
+
+  return {
+    data,
+    loading,
+    error,
+  };
+};

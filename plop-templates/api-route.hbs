@@ -1,0 +1,143 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
+
+// Define your request schema
+const requestSchema = z.object({
+  // Add your schema fields here
+});
+
+// Define your response type
+type ResponseData = {
+  success: boolean;
+  data?: any;
+  error?: string;
+};
+
+/**
+ * GET /api/{{name}}
+ * Description: Fetch {{name}} data
+ */
+export async function GET(request: NextRequest) {
+  try {
+    // Add your GET logic here
+    
+    return NextResponse.json<ResponseData>({
+      success: true,
+      data: null,
+    });
+  } catch (error) {
+    console.error('GET /api/{{name}} error:', error);
+    return NextResponse.json<ResponseData>(
+      {
+        success: false,
+        error: 'Internal server error',
+      },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * POST /api/{{name}}
+ * Description: Create new {{name}}
+ */
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    
+    // Validate request body
+    const validatedData = requestSchema.parse(body);
+    
+    // Add your POST logic here
+    
+    return NextResponse.json<ResponseData>(
+      {
+        success: true,
+        data: validatedData,
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json<ResponseData>(
+        {
+          success: false,
+          error: 'Invalid request data',
+        },
+        { status: 400 }
+      );
+    }
+    
+    console.error('POST /api/{{name}} error:', error);
+    return NextResponse.json<ResponseData>(
+      {
+        success: false,
+        error: 'Internal server error',
+      },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * PUT /api/{{name}}
+ * Description: Update {{name}}
+ */
+export async function PUT(request: NextRequest) {
+  try {
+    const body = await request.json();
+    
+    // Validate request body
+    const validatedData = requestSchema.parse(body);
+    
+    // Add your PUT logic here
+    
+    return NextResponse.json<ResponseData>({
+      success: true,
+      data: validatedData,
+    });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json<ResponseData>(
+        {
+          success: false,
+          error: 'Invalid request data',
+        },
+        { status: 400 }
+      );
+    }
+    
+    console.error('PUT /api/{{name}} error:', error);
+    return NextResponse.json<ResponseData>(
+      {
+        success: false,
+        error: 'Internal server error',
+      },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * DELETE /api/{{name}}
+ * Description: Delete {{name}}
+ */
+export async function DELETE(request: NextRequest) {
+  try {
+    // Add your DELETE logic here
+    
+    return NextResponse.json<ResponseData>({
+      success: true,
+      data: { message: 'Deleted successfully' },
+    });
+  } catch (error) {
+    console.error('DELETE /api/{{name}} error:', error);
+    return NextResponse.json<ResponseData>(
+      {
+        success: false,
+        error: 'Internal server error',
+      },
+      { status: 500 }
+    );
+  }
+}
