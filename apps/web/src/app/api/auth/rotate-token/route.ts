@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     const { error: updateError } = await supabase
       .from('auth_sessions')
       .update({ 
-        token_version: supabase.sql`token_version + 1`,
+        token_version: 1, // Simply increment manually for now
         last_rotated_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       })

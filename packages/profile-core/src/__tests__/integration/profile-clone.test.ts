@@ -87,7 +87,7 @@ describe('ProfileCloneService Integration', () => {
       });
 
       expect(result.bio).toBe('Customized bio for 10X Growth');
-      expect(result.hourlyRate.min).toBe(3000);
+      expect((result as any).hourlyRate.min).toBe(3000);
     });
 
     it('should throw error if source profile not found', async () => {

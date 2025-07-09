@@ -1,14 +1,14 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { AuthForm } from '@/components/auth/auth-form'
+import { LoginForm } from '@sasarjan/auth/client-only'
 import Link from 'next/link'
 
 export default function LoginPage() {
   const router = useRouter()
 
   const handleSuccess = () => {
-    router.push('/dashboard') // Redirect to dashboard or home
+    router.push('/dashboard')
   }
 
   return (
@@ -23,7 +23,11 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <AuthForm mode="login" onSuccess={handleSuccess} />
+        <LoginForm 
+          onSuccess={handleSuccess} 
+          showSignUp={false}
+          className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6"
+        />
 
         <div className="text-center text-sm text-gray-600 dark:text-gray-300">
           Don't have an account?{' '}

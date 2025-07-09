@@ -13,7 +13,7 @@ export const test = base.extend<{
   },
 
   // Authenticated page fixture - automatically logs in as admin
-  authenticatedPage: async ({ page, adminHelpers }, use) => {
+  authenticatedPage: async ({ page, adminHelpers }: any, use: any) => {
     await adminHelpers.loginAsAdmin();
     await use(page);
     await adminHelpers.logout();

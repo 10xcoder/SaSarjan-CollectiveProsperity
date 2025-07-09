@@ -27,7 +27,7 @@ interface DeveloperStatus {
 }
 
 export default function DeveloperWelcomePage() {
-  const router = useRouter()
+  const _router = useRouter()
   const [status, setStatus] = useState<DeveloperStatus | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 

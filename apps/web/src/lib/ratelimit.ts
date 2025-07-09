@@ -32,12 +32,12 @@ class InMemoryRateLimit {
 const inMemoryLimiter = new InMemoryRateLimit()
 
 // Create rate limiters with fallback to in-memory for development
-function createRateLimiter(limiterConfig: { limiter: unknown; analytics?: boolean; prefix?: string }, fallbackLimit: number, fallbackWindow: number) {
+function createRateLimiter(limiterConfig: { limiter: any; analytics?: boolean; prefix?: string }, fallbackLimit: number, fallbackWindow: number) {
   try {
     if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
       return new Ratelimit({
         redis: Redis.fromEnv(),
-        limiter: limiterConfig.limiter,
+        limiter: limiterConfig.limiter as any,
         analytics: limiterConfig.analytics,
         prefix: limiterConfig.prefix
       })

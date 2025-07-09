@@ -16,7 +16,7 @@ import { AnalyticsTracker } from './analytics-tracker';
 
 export class SearchManager {
   private supabase = createSupabaseClient();
-  private analytics = new AnalyticsTracker();
+  private analytics = AnalyticsTracker.getInstance({ enableTracking: false });
   private searchIndex: Fuse<SearchDocumentType> | null = null;
   private indexLastUpdated: Date | null = null;
   private readonly INDEX_REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes
@@ -229,6 +229,7 @@ export class SearchManager {
       includeMatches: true,
       threshold: query.fuzzy ? 0.6 : 0.2,
       ignoreLocation: true,
+      limit: query.limit || 20,
       keys: this.getSearchFields(query.searchFields),
     };
 
@@ -660,7 +661,12 @@ export class SearchManager {
         timestamp: new Date(),
       };
 
-      await this.analytics.trackSearchEvent(analytics);
+      await this.analytics.trackSearchEvent(
+        query.query || '',
+        query.filters || {},
+        [], // Results not available in this context
+        query.userId
+      );
 
       // Update popular searches
       await this.updatePopularSearches(query.query);
@@ -741,7 +747,7 @@ export class SearchManager {
         authorName: '', // Would need to join with user_profiles
         authorId: item.primaryAuthor,
         location: item.location,
-        publishedAt: new Date(item.publishedAt || item.createdAt),
+        publishedAt: new Date(item.publishedAt || (item as any).createdAt),
         updatedAt: new Date(item.updatedAt),
         viewCount: item.viewCount || 0,
         likeCount: item.likeCount || 0,

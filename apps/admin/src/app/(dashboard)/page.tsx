@@ -44,7 +44,7 @@ export default function AdminDashboard() {
     multiProfile: 0,
     regular: 0
   })
-  const [recentTransactions, setRecentTransactions] = useState<any[]>([])
+  const [recentTransactions, setRecentTransactions] = useState<unknown[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -80,7 +80,7 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
+      <div data-testid="dashboard-header">
         <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
         <p className="text-gray-600 mt-1">
           Welcome to SaSarjan Admin Portal - Manage your platform effectively
@@ -219,7 +219,7 @@ export default function AdminDashboard() {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {recentTransactions.map((transaction) => (
+            {recentTransactions.map((transaction: any) => (
               <div key={transaction.id} className="flex items-center justify-between border-b pb-3 last:border-0">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center">

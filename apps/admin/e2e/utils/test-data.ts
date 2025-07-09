@@ -4,9 +4,9 @@
 
 export const TEST_USERS = {
   admin: {
-    email: 'admin@test.com',
-    password: 'admin123',
-    fullName: 'Test Admin',
+    email: 'admin@sasarjan.com',
+    password: 'password123',
+    fullName: 'SaSarjan Admin',
     role: 'admin'
   },
   newUser: {

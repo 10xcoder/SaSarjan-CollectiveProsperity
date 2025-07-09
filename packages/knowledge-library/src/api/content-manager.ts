@@ -86,9 +86,9 @@ export interface ContentQuery {
 
 export class ContentManager {
   private supabase = createSupabaseClient();
-  private validator = new ContentValidator();
-  private processor = new ContentProcessor();
-  private analytics = new AnalyticsTracker();
+  private validator = ContentValidator.getInstance();
+  private processor = ContentProcessor.getInstance();
+  private analytics = AnalyticsTracker.getInstance({ enableTracking: false });
 
   /**
    * Create new content
@@ -96,7 +96,7 @@ export class ContentManager {
   async createContent(userId: string, request: CreateContentRequest): Promise<KnowledgeContentType> {
     try {
       // Validate request
-      const validationResult = this.validator.validateCreateRequest(request);
+      const validationResult = await this.validator.validateCreateRequest(request);
       if (!validationResult.isValid) {
         throw new Error(`Validation failed: ${validationResult.errors.join(', ')}`);
       }
@@ -106,10 +106,10 @@ export class ContentManager {
       const slug = await this.generateUniqueSlug(request.title);
 
       // Process content
-      const processedContent = await this.processor.processContent(request.content, {
-        type: request.type,
-        sanitize: true,
-        generateExcerpt: true,
+      const processedContent = this.processor.processContent({
+        content: request.content,
+        type: request.type
+      }, {
         extractKeywords: true,
       });
 
@@ -132,7 +132,7 @@ export class ContentManager {
         title: request.title,
         slug,
         description: request.description,
-        content: processedContent.content,
+        content: processedContent.content || request.content,
         excerpt: processedContent.excerpt,
         type: request.type,
         status: 'draft',
@@ -241,12 +241,12 @@ export class ContentManager {
         userId,
         eventType: 'content_create',
         contentId: id,
-        contentType: request.type,
-        contentCategory: request.category,
-        eventData: {
+        metadata: {
           title: request.title,
           type: request.type,
           category: request.category,
+          contentType: request.type,
+          contentCategory: request.category,
         },
       });
 
@@ -273,7 +273,7 @@ export class ContentManager {
       }
 
       // Validate request
-      const validationResult = this.validator.validateUpdateRequest(request);
+      const validationResult = await this.validator.validateUpdateRequest(request);
       if (!validationResult.isValid) {
         throw new Error(`Validation failed: ${validationResult.errors.join(', ')}`);
       }
@@ -281,10 +281,10 @@ export class ContentManager {
       // Process content if changed
       let processedContent;
       if (request.content && request.content !== existing.content) {
-        processedContent = await this.processor.processContent(request.content, {
-          type: request.type || existing.type,
-          sanitize: true,
-          generateExcerpt: true,
+        processedContent = this.processor.processContent({
+          content: request.content,
+          type: request.type || existing.type
+        }, {
           extractKeywords: true,
         });
       }
@@ -305,12 +305,23 @@ export class ContentManager {
         previousVersion: existing.version,
       };
 
+      // Process media if provided
+      let processedMediaUpdates: ContentMediaType[] | undefined;
+      if (request.media) {
+        processedMediaUpdates = request.media.map(media => ({
+          ...media,
+          id: nanoid(),
+          uploadedAt: new Date(),
+        }));
+      }
+
       // Update content
+      const { media, ...requestWithoutMedia } = request;
       const updates: Partial<KnowledgeContentType> = {
-        ...request,
+        ...requestWithoutMedia,
         id: existing.id, // Ensure ID doesn't change
         slug: newSlug,
-        content: processedContent?.content || existing.content,
+        content: processedContent?.content || existing.content || '',
         excerpt: processedContent?.excerpt || existing.excerpt,
         keywords: request.keywords || processedContent?.keywords || existing.keywords,
         estimatedReadTime: request.estimatedReadTime || processedContent?.estimatedReadTime || existing.estimatedReadTime,
@@ -318,6 +329,7 @@ export class ContentManager {
         version: newVersion,
         versions: [...existing.versions, newVersionInfo],
         updatedAt: new Date(),
+        ...(processedMediaUpdates && { media: processedMediaUpdates }),
       };
 
       // Add contributor if not primary author
@@ -350,12 +362,12 @@ export class ContentManager {
         userId,
         eventType: 'content_edit',
         contentId: request.id,
-        contentType: data.type,
-        contentCategory: data.category,
-        eventData: {
+        metadata: {
           previousVersion: existing.version,
           newVersion,
           changelog: request.changelog,
+          contentType: data.type,
+          contentCategory: data.category,
         },
       });
 
@@ -400,8 +412,10 @@ export class ContentManager {
         userId,
         eventType: 'content_publish',
         contentId,
-        contentType: data.type,
-        contentCategory: data.category,
+        metadata: {
+          contentType: data.type,
+          contentCategory: data.category,
+        },
       });
 
       return data;
@@ -437,8 +451,10 @@ export class ContentManager {
         userId,
         eventType: 'content_delete',
         contentId,
-        contentType: content.type,
-        contentCategory: content.category,
+        metadata: {
+          contentType: content.type,
+          contentCategory: content.category,
+        },
       });
     } catch (error) {
       throw new Error(`Failed to delete content: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -653,7 +669,7 @@ export class ContentManager {
         userId,
         eventType: `content_${type}` as any,
         contentId,
-        eventData: data,
+        metadata: data,
       });
     } catch (error) {
       throw new Error(`Failed to add interaction: ${error instanceof Error ? error.message : 'Unknown error'}`);

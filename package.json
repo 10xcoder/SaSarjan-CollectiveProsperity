@@ -28,6 +28,8 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "typecheck": "turbo typecheck",
+    "validate": "pnpm typecheck && pnpm build",
+    "precommit": "pnpm typecheck",
     "clean": "turbo clean && rm -rf node_modules",
     "prepare": "husky",
     "generate": "plop",

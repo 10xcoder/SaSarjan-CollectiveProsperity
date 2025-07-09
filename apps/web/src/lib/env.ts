@@ -27,6 +27,7 @@ export const env = {
 
   // App Configuration
   APP_URL: process.env.APP_URL || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
+  INTERNAL_API_KEY: process.env.INTERNAL_API_KEY || '',
 }
 
 // Validation function

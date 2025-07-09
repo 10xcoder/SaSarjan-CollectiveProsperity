@@ -1,22 +1,16 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { 
   Search, 
   UserCircle, 
   Mail, 
-  Phone, 
   MapPin,
-  Wallet,
-  Shield,
-  Code,
-  Users,
   ChevronDown,
   ChevronUp,
-  Plus,
   UserPlus,
   Package
 } from "lucide-react"
@@ -207,7 +201,7 @@ export default function UsersPage() {
     })
   }
 
-  const appNames: Record<string, string> = {
+  const _appNames: Record<string, string> = {
     'platform-001': 'TalentExcel',
     'platform-002': '10xGrowth',
     'platform-003': 'SevaPremi',

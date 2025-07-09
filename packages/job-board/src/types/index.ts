@@ -3,6 +3,26 @@ export * from './job';
 export * from './application';
 export * from './freelance';
 
+// Import types for local use
+import type {
+  JobPostingType,
+  EmploymentTypeType,
+  ExperienceLevelType,
+  JobCategoryType,
+  WorkArrangementType,
+} from './job';
+
+import type {
+  JobApplicationType,
+} from './application';
+
+import type {
+  ProjectProposalType,
+  ProjectTypeType,
+  ProjectDurationType,
+  RequiredExperienceType,
+} from './freelance';
+
 // Re-export commonly used types
 export type {
   JobPostingType,
@@ -33,8 +53,8 @@ export type {
   ScreeningResponseType,
   ApplicationDocumentType,
   ReferenceContactType,
-  InterviewType,
-  AssessmentType,
+  InterviewDetailsType,
+  AssessmentDetailsType,
   TimelineEventType,
   ApplicationNoteType,
   JobOfferType,

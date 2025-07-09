@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { useEffect, useState, useCallback } from "react"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { 
@@ -9,14 +9,11 @@ import {
   Package,
   Star,
   Download,
-  IndianRupee,
-  Users,
   Puzzle,
   ChevronDown,
   ChevronUp,
   ExternalLink,
   Calendar,
-  Plus,
   PackagePlus
 } from "lucide-react"
 import { adminQueries, supabase } from "@/lib/supabase"
@@ -119,15 +116,7 @@ export default function AppsPage() {
     action: () => {}
   })
 
-  useEffect(() => {
-    loadApps()
-  }, [page])
-
-  useEffect(() => {
-    filterApps()
-  }, [searchTerm, apps])
-
-  async function loadApps() {
+  const loadApps = useCallback(async () => {
     try {
       setLoading(true)
       const { apps: appData, total: totalCount } = await adminQueries.getAppsWithDetails(page, pageSize)
@@ -138,9 +127,9 @@ export default function AppsPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [page, pageSize])
 
-  function filterApps() {
+  const filterApps = useCallback(() => {
     if (!searchTerm) {
       setFilteredApps(apps)
       return
@@ -152,7 +141,15 @@ export default function AppsPage() {
       app.category?.toLowerCase().includes(searchTerm.toLowerCase())
     )
     setFilteredApps(filtered)
-  }
+  }, [searchTerm, apps])
+
+  useEffect(() => {
+    loadApps()
+  }, [loadApps])
+
+  useEffect(() => {
+    filterApps()
+  }, [filterApps])
 
   function getPricingLabel(app: App) {
     switch (app.pricing_type) {
@@ -206,10 +203,10 @@ export default function AppsPage() {
           })
           
           loadApps() // Reload apps
-        } catch (error: any) {
+        } catch (error: unknown) {
           toast({
             title: "Error",
-            description: error.message,
+            description: error instanceof Error ? error.message : "An error occurred",
             variant: "destructive"
           })
         }
@@ -217,7 +214,7 @@ export default function AppsPage() {
     })
   }
 
-  const handleManageModules = (app: App) => {
+  const handleManageModules = () => {
     // This would open a modules management interface
     toast({
       title: "Coming soon",
@@ -430,7 +427,7 @@ export default function AppsPage() {
                       <Button 
                         variant="outline" 
                         size="sm"
-                        onClick={() => handleManageModules(app)}
+                        onClick={() => handleManageModules()}
                       >
                         Manage Modules
                       </Button>

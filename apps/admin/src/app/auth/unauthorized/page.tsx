@@ -18,7 +18,7 @@ export default function UnauthorizedPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-center text-sm text-gray-600">
-            You don't have permission to access the admin dashboard. 
+            You don&apos;t have permission to access the admin dashboard. 
             Only authorized administrators can view this area.
           </p>
           <div className="flex flex-col gap-2">

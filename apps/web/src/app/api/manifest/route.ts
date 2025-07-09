@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { APP_ASSETS } from '@repo/assets'
 
 export async function GET(request: NextRequest) {
   const locale = request.headers.get('accept-language')?.split(',')[0] || 'en'
@@ -18,22 +19,32 @@ export async function GET(request: NextRequest) {
     scope: "/",
     icons: [
       {
-        src: "/icons/icon.svg",
+        src: "/logos/sasarjan/sasarjan-32.svg",
         sizes: "any",
         type: "image/svg+xml",
         purpose: "any maskable"
       },
       {
-        src: "/icons/icon-192.svg",
+        src: "/logos/sasarjan/sasarjan-192.svg",
         sizes: "192x192",
         type: "image/svg+xml",
         purpose: "any maskable"
       },
       {
-        src: "/icons/icon-512.svg",
+        src: "/logos/sasarjan/sasarjan-512.svg",
         sizes: "512x512",
         type: "image/svg+xml",
         purpose: "any maskable"
+      },
+      {
+        src: APP_ASSETS.sasarjan.favicon.png192,
+        sizes: "192x192",
+        type: "image/png"
+      },
+      {
+        src: APP_ASSETS.sasarjan.favicon.png512,
+        sizes: "512x512",
+        type: "image/png"
       }
     ],
     categories: ["productivity", "social", "education", "business"],

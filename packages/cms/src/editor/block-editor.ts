@@ -2,19 +2,19 @@ import { nanoid } from 'nanoid';
 import {
   ContentBlockType,
   ContentBlockBaseType,
-  HeroBlock,
-  FeaturesBlock,
-  TextBlock,
-  ImageBlock,
-  VideoBlock,
-  CTABlock,
-  TestimonialsBlock,
-  FAQBlock,
-  FormBlock,
-  StatsBlock,
-  TeamBlock,
-  AppsShowcaseBlock,
-  ProsperityCategoriesBlock,
+  HeroBlockType,
+  FeaturesBlockType,
+  TextBlockType,
+  ImageBlockType,
+  VideoBlockType,
+  CTABlockType,
+  TestimonialsBlockType,
+  FAQBlockType,
+  FormBlockType,
+  StatsBlockType,
+  TeamBlockType,
+  AppsShowcaseBlockType,
+  ProsperityCategoriesBlockType,
 } from '../types';
 
 export interface BlockOperation {
@@ -388,7 +388,7 @@ export class BlockEditor {
             overlay: { enabled: false, color: 'rgba(0,0,0,0.5)' },
             ...data?.data,
           },
-        } as HeroBlock;
+        } as HeroBlockType;
 
       case 'features':
         return {
@@ -401,7 +401,7 @@ export class BlockEditor {
             features: [],
             ...data?.data,
           },
-        } as FeaturesBlock;
+        } as FeaturesBlockType;
 
       case 'text':
         return {
@@ -413,7 +413,7 @@ export class BlockEditor {
             alignment: 'left',
             ...data?.data,
           },
-        } as TextBlock;
+        } as TextBlockType;
 
       case 'image':
         return {
@@ -426,7 +426,7 @@ export class BlockEditor {
             lazy: true,
             ...data?.data,
           },
-        } as ImageBlock;
+        } as ImageBlockType;
 
       case 'video':
         return {
@@ -441,7 +441,7 @@ export class BlockEditor {
             controls: true,
             ...data?.data,
           },
-        } as VideoBlock;
+        } as VideoBlockType;
 
       case 'cta':
         return {
@@ -459,7 +459,7 @@ export class BlockEditor {
             alignment: 'center',
             ...data?.data,
           },
-        } as CTABlock;
+        } as CTABlockType;
 
       case 'testimonials':
         return {
@@ -471,7 +471,7 @@ export class BlockEditor {
             testimonials: [],
             ...data?.data,
           },
-        } as TestimonialsBlock;
+        } as TestimonialsBlockType;
 
       case 'faq':
         return {
@@ -484,7 +484,7 @@ export class BlockEditor {
             faqs: [],
             ...data?.data,
           },
-        } as FAQBlock;
+        } as FAQBlockType;
 
       case 'form':
         return {
@@ -522,7 +522,7 @@ export class BlockEditor {
             ],
             ...data?.data,
           },
-        } as FormBlock;
+        } as FormBlockType;
 
       case 'stats':
         return {
@@ -535,7 +535,7 @@ export class BlockEditor {
             stats: [],
             ...data?.data,
           },
-        } as StatsBlock;
+        } as StatsBlockType;
 
       case 'team':
         return {
@@ -548,7 +548,7 @@ export class BlockEditor {
             members: [],
             ...data?.data,
           },
-        } as TeamBlock;
+        } as TeamBlockType;
 
       case 'apps_showcase':
         return {
@@ -561,7 +561,7 @@ export class BlockEditor {
             showMetrics: true,
             ...data?.data,
           },
-        } as AppsShowcaseBlock;
+        } as AppsShowcaseBlockType;
 
       case 'prosperity_categories':
         return {
@@ -576,7 +576,7 @@ export class BlockEditor {
             showCounts: false,
             ...data?.data,
           },
-        } as ProsperityCategoriesBlock;
+        } as ProsperityCategoriesBlockType;
 
       default:
         throw new Error(`Unknown block type: ${blockType}`);
@@ -701,6 +701,7 @@ export class BlockEditor {
           data: {
             title: 'Frequently Asked Questions',
             layout: 'accordion',
+            searchable: false,
             faqs: [
               {
                 id: nanoid(),

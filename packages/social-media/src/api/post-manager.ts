@@ -168,6 +168,9 @@ export class PostManager {
       try {
         const result = await this.publishToPlatform(userId, post, platform);
         results[platform] = result;
+        if (!result.success) {
+          hasErrors = true;
+        }
       } catch (error) {
         results[platform] = { 
           success: false, 

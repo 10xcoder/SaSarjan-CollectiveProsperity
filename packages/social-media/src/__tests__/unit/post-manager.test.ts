@@ -94,21 +94,26 @@ describe('PostManager', () => {
     it('should create a scheduled post', async () => {
       const mockSupabase = (globalThis as any).mockSupabaseClient;
       const scheduledDate = new Date(Date.now() + 3600 * 1000);
+      
+      // Mock the post that will be returned from database
       const mockPost: SocialPostType = {
         id: 'post-123',
         userId: 'user-123',
-        appId: 'app-456',
+        appId: 'default',
         content: 'Scheduled post content',
-        hashtags: [],
-        mentions: [],
-        media: [],
+        hashtags: undefined,
+        mentions: undefined,
+        media: undefined,
         platforms: ['linkedin'],
         status: 'scheduled',
-        priority: 'normal',
+        priority: undefined,
         scheduledAt: scheduledDate,
-        platformConfigs: [],
+        platformConfigs: undefined,
         createdAt: new Date(),
         updatedAt: new Date(),
+        title: undefined,
+        summary: undefined,
+        metadata: undefined,
       };
 
       mockSupabase.from.mockReturnValue({
@@ -132,7 +137,14 @@ describe('PostManager', () => {
 
       expect(result.status).toBe('scheduled');
       expect(result.scheduledAt).toEqual(scheduledDate);
-      expect(scheduler.schedulePost).toHaveBeenCalledWith(result);
+      expect(scheduler.schedulePost).toHaveBeenCalledWith(expect.objectContaining({
+        content: 'Scheduled post content',
+        platforms: ['linkedin'],
+        status: 'scheduled',
+        scheduledAt: scheduledDate,
+        userId: 'user-123',
+        appId: 'default',
+      }));
     });
 
     it('should validate platform access before creating post', async () => {
@@ -487,7 +499,6 @@ describe('PostManager', () => {
 
   describe('Post Retrieval', () => {
     it('should get user posts with filters', async () => {
-      const mockSupabase = (globalThis as any).mockSupabaseClient;
       const mockPosts: SocialPostType[] = [
         {
           id: 'post-1',
@@ -521,22 +532,28 @@ describe('PostManager', () => {
         },
       ];
 
-      mockSupabase.from.mockReturnValue({
-        select: vi.fn(() => ({
-          eq: vi.fn(() => ({
-            neq: vi.fn(() => ({
-              order: vi.fn(() => ({
-                limit: vi.fn(() => ({
-                  range: vi.fn(() => Promise.resolve({
-                    data: mockPosts,
-                    error: null,
-                    count: 2,
-                  })),
-                })),
-              })),
-            })),
-          })),
-        })),
+      // Create a mock query object that is awaitable and returns the expected result
+      const mockSupabaseQuery = {
+        eq: vi.fn().mockReturnThis(),
+        neq: vi.fn().mockReturnThis(),
+        contains: vi.fn().mockReturnThis(),
+        order: vi.fn().mockReturnThis(),
+        limit: vi.fn().mockReturnThis(),
+        range: vi.fn().mockReturnThis(),
+        // Make the object itself awaitable 
+        then: vi.fn((resolve) => {
+          resolve({
+            data: mockPosts,
+            error: null,
+            count: 2,
+          });
+        }),
+      };
+
+      // Mock the database query specifically for this test
+      const mockSupabase = (globalThis as any).mockSupabaseClient;
+      mockSupabase.from.mockReturnValueOnce({
+        select: vi.fn().mockReturnValue(mockSupabaseQuery),
       });
 
       const result = await postManager.getUserPosts('user-123', {

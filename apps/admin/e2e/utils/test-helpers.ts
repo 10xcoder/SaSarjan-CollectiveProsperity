@@ -6,14 +6,14 @@ export class AdminTestHelpers {
   /**
    * Login as admin user
    */
-  async loginAsAdmin(email: string = 'admin@test.com', password: string = 'password123') {
+  async loginAsAdmin(email: string = 'admin@sasarjan.com', password: string = 'password123') {
     await this.page.goto('/auth/login');
     await this.page.fill('[data-testid="email-input"]', email);
     await this.page.fill('[data-testid="password-input"]', password);
     await this.page.click('[data-testid="login-button"]');
     
     // Wait for dashboard to load
-    await expect(this.page).toHaveURL('/dashboard');
+    await expect(this.page).toHaveURL('/');
     await this.page.waitForLoadState('networkidle');
   }
 

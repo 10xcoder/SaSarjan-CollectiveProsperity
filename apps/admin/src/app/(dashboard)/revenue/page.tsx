@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -16,10 +16,7 @@ import {
   TrendingUp,
   TrendingDown,
   Download,
-  Filter,
-  Calendar,
   Package,
-  Users,
   Wallet,
   CreditCard,
   ArrowUpRight,
@@ -48,7 +45,7 @@ interface Transaction {
   type: string // credit or debit
   status: string
   description: string | null
-  metadata: any
+  metadata: Record<string, unknown>
   created_at: string
   updated_at: string
   developer_share: number
@@ -102,11 +99,7 @@ export default function RevenuePage() {
   const [page, setPage] = useState(1)
   const pageSize = 20
 
-  useEffect(() => {
-    loadRevenueData()
-  }, [page, filter])
-
-  async function loadRevenueData() {
+  const loadRevenueData = useCallback(async () => {
     try {
       setLoading(true)
       const [revenueStats, transactionData, appRevenueData] = await Promise.all([
@@ -123,7 +116,11 @@ export default function RevenuePage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [page, pageSize, filter])
+
+  useEffect(() => {
+    loadRevenueData()
+  }, [loadRevenueData])
 
   const monthGrowth = stats.previousMonthRevenue > 0 
     ? ((stats.currentMonthRevenue - stats.previousMonthRevenue) / stats.previousMonthRevenue * 100).toFixed(1)

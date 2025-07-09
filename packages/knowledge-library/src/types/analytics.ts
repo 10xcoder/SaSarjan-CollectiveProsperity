@@ -288,9 +288,9 @@ export const PlatformAnalytics = z.object({
 export type PlatformAnalyticsType = z.infer<typeof PlatformAnalytics>;
 
 /**
- * Search Analytics
+ * Search Metrics Analytics
  */
-export const SearchAnalytics = z.object({
+export const SearchMetricsAnalytics = z.object({
   // Query Metrics
   totalQueries: z.number().default(0),
   uniqueQueries: z.number().default(0),
@@ -360,7 +360,7 @@ export const SearchAnalytics = z.object({
   calculatedAt: z.date(),
 });
 
-export type SearchAnalyticsType = z.infer<typeof SearchAnalytics>;
+export type SearchMetricsAnalyticsType = z.infer<typeof SearchMetricsAnalytics>;
 
 /**
  * Analytics Report

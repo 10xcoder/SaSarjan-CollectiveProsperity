@@ -45,8 +45,8 @@ describe('AuthManager', () => {
 
       expect(result.url).toContain('https://www.linkedin.com/oauth/v2/authorization');
       expect(result.url).toContain('client_id=test-client-id');
-      expect(result.url).toContain('redirect_uri=http://localhost:3000/callback');
-      expect(result.url).toContain('scope=r_liteprofile%20w_member_social');
+      expect(result.url).toContain('redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback');
+      expect(result.url).toContain('scope=r_liteprofile+w_member_social');
       expect(result.state).toBeDefined();
       expect(result.codeVerifier).toBeUndefined(); // LinkedIn doesn't use PKCE
     });

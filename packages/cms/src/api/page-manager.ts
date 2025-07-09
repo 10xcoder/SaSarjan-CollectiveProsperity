@@ -144,6 +144,7 @@ export class PageManager {
           showInNavigation: false,
           allowComments: false,
           allowSharing: true,
+          membershipRequired: false,
           trackingEnabled: true,
           ...request.settings,
         },
@@ -251,6 +252,15 @@ export class PageManager {
         version: newVersion,
         versions: [...existing.versions, newVersionInfo],
         updatedAt: new Date(),
+        settings: request.settings ? {
+          showInNavigation: existing.settings?.showInNavigation ?? false,
+          allowComments: existing.settings?.allowComments ?? false,
+          allowSharing: existing.settings?.allowSharing ?? true,
+          membershipRequired: existing.settings?.membershipRequired ?? false,
+          trackingEnabled: existing.settings?.trackingEnabled ?? true,
+          ...existing.settings,
+          ...request.settings,
+        } : existing.settings,
       };
 
       // Save to database
@@ -421,14 +431,14 @@ export class PageManager {
    */
   async getPageById(pageId: string, includeAnalytics = false): Promise<CMSPageType | null> {
     try {
-      let query = this.supabase
-        .from('cms_pages')
-        .select('*')
-        .eq('id', pageId);
+      const selectClause = includeAnalytics 
+        ? '*, analytics:page_analytics(*)'
+        : '*';
 
-      if (includeAnalytics) {
-        query = query.select('*, analytics:page_analytics(*)');
-      }
+      const query = this.supabase
+        .from('cms_pages')
+        .select(selectClause)
+        .eq('id', pageId);
 
       const { data, error } = await query.single();
 
@@ -439,7 +449,7 @@ export class PageManager {
         throw new Error(`Failed to get page: ${error.message}`);
       }
 
-      return data;
+      return data as unknown as CMSPageType;
     } catch (error) {
       throw new Error(`Failed to get page: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -468,7 +478,7 @@ export class PageManager {
         throw new Error(`Failed to get page: ${error.message}`);
       }
 
-      return data;
+      return data as unknown as CMSPageType;
     } catch (error) {
       throw new Error(`Failed to get page: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }

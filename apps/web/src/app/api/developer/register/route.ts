@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create initial app submission
-    const { data: app, error: appError } = await supabase
+    const { data: _app, error: appError } = await supabase
       .from('apps')
       .insert({
         developer_id: developer.id,

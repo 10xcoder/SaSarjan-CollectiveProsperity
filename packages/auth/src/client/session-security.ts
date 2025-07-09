@@ -282,6 +282,24 @@ export class SessionSecurityEnhancer {
   }
   
   /**
+   * Start monitoring (placeholder - already auto-started)
+   */
+  startMonitoring() {
+    // Monitoring is already active
+  }
+  
+  /**
+   * Stop monitoring
+   */
+  stopMonitoring() {
+    // Clear all timers
+    for (const timer of this.rotationTimers.values()) {
+      clearTimeout(timer)
+    }
+    this.rotationTimers.clear()
+  }
+  
+  /**
    * Clean up session security data
    */
   clearSession(sessionId: string) {

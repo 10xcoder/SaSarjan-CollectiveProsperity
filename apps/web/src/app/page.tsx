@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -27,8 +29,8 @@ export default function HomePage() {
       description: "Connect with local community service opportunities and initiatives",
       icon: Heart,
       color: "bg-green-500/10 text-green-600", 
-      status: "launching-soon",
-      url: "https://sevapremi.com",
+      status: "active",
+      url: "http://localhost:3003",
       features: ["Local impact tracking", "Volunteer coordination", "Service verification"]
     },
     {
@@ -37,9 +39,9 @@ export default function HomePage() {
       description: "Tools and resources for accelerating business development",
       icon: Building2,
       color: "bg-purple-500/10 text-purple-600",
-      status: "launching-soon", 
-      url: "https://10xgrowth.com",
-      features: ["Growth analytics", "Market insights", "Partnership matching"]
+      status: "active", 
+      url: "http://localhost:3002",
+      features: ["Freelancer marketplace", "Landing page builder", "Profile management"]
     }
   ]
 
@@ -273,6 +275,16 @@ export default function HomePage() {
                       />
                     </div>
                   )}
+                  
+                  {/* Active status indicator */}
+                  {app.status === 'active' && (
+                    <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                      <div className="flex items-center justify-center">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse" />
+                        <span className="text-sm font-medium text-green-700 dark:text-green-300">Live & Ready to Use</span>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Features - hidden on mobile, shown on hover on desktop */}
                   <div className="mb-6">
@@ -291,7 +303,7 @@ export default function HomePage() {
                   
                   <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors" asChild>
                     <Link href={app.url}>
-                      Learn More
+                      {app.status === 'active' ? 'Open App' : 'Learn More'}
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </Button>
@@ -351,6 +363,7 @@ export default function HomePage() {
               bundle={bundle}
               onSelect={(bundleId) => {
                 // Handle bundle selection - could navigate to checkout
+                 
                 console.log('Selected bundle:', bundleId)
               }}
             />

@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { Database } from './types'
 
 // Environment variables
@@ -10,7 +10,7 @@ if (!supabaseUrl || !supabaseKey) {
 }
 
 // Create the Supabase client
-export const supabase = createClient<Database>(supabaseUrl, supabaseKey, {
+export const supabase = createSupabaseClient<Database>(supabaseUrl, supabaseKey, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
@@ -191,6 +191,9 @@ export const supabaseUtils = {
     }
   }
 }
+
+// Export createClient for convenience
+export const createClient = () => supabase
 
 // Export default client
 export default supabase

@@ -44,6 +44,93 @@ const formatCategory = (category: string) => {
     .join(' ');
 };
 
+// Local running apps data
+const localApps = [
+  {
+    id: 'local-10xgrowth',
+    name: '10xGrowth',
+    tagline: 'Freelancer marketplace for 10X business growth',
+    description: 'Connect with top freelancers, manage projects, and build your professional profile. Features include freelancer browsing, landing page creation, and comprehensive profile management.',
+    category: 'economic-empowerment',
+    status: 'active',
+    icon_url: '/icons/10xgrowth.svg',
+    url: 'http://localhost:3002',
+    micro_apps: [
+      {
+        id: 'freelancer-browse',
+        name: 'Freelancer Browse',
+        description: 'Find and connect with skilled freelancers across various categories',
+        category: 'professional-networking'
+      },
+      {
+        id: 'landing-pages',
+        name: 'Landing Page Builder',
+        description: 'Create custom landing pages for your business or services',
+        category: 'content-management'
+      },
+      {
+        id: 'profile-management',
+        name: 'Profile Management',
+        description: 'Build and manage your professional profile with skills and experience',
+        category: 'personal-branding'
+      }
+    ],
+    _count: { installations: 0, reviews: 0 },
+    _avg: { rating: null }
+  },
+  {
+    id: 'local-talentexcel',
+    name: 'TalentExcel',
+    tagline: 'Career opportunities and skill development platform',
+    description: 'Discover internships, fellowships, and skill development programs. Location-aware matching for career growth.',
+    category: 'personal-transformation',
+    status: 'launching-soon',
+    icon_url: '/icons/talentexcel.svg',
+    url: 'http://localhost:3001',
+    micro_apps: [],
+    _count: { installations: 0, reviews: 0 },
+    _avg: { rating: null }
+  },
+  {
+    id: 'local-sevapremi',
+    name: 'SevaPremi',
+    tagline: 'Community service and volunteer platform',
+    description: 'Connect with meaningful volunteer opportunities in your community. Track your impact, verify your service, and be part of India\'s largest community service network.',
+    category: 'community-resilience',
+    status: 'active',
+    icon_url: '/icons/sevapremi.svg',
+    url: 'http://localhost:3003',
+    micro_apps: [
+      {
+        id: 'volunteer-opportunities',
+        name: 'Volunteer Opportunities',
+        description: 'Browse and register for community service opportunities',
+        category: 'community-service'
+      },
+      {
+        id: 'impact-tracker',
+        name: 'Impact Tracker',
+        description: 'Track your volunteer hours and community impact',
+        category: 'analytics'
+      },
+      {
+        id: 'service-verification',
+        name: 'Service Verification',
+        description: 'Get your community service verified and certified',
+        category: 'certification'
+      },
+      {
+        id: 'volunteer-profile',
+        name: 'Volunteer Profile',
+        description: 'Create and manage your volunteer profile and skills',
+        category: 'profile-management'
+      }
+    ],
+    _count: { installations: 0, reviews: 0 },
+    _avg: { rating: null }
+  }
+];
+
 export default function ExplorePage() {
   const [apps, setApps] = useState<AppWithDetails[]>([]);
   const [loading, setLoading] = useState(true);
@@ -76,7 +163,7 @@ export default function ExplorePage() {
       const { data: installData, error: installError } = await supabase
         .from('app_installations')
         .select('app_id')
-        .in('app_id', appsData?.map(app => app.id) || []);
+        .in('app_id', appsData?.map((app: App) => app.id) || []);
 
       if (installError) throw installError;
 
@@ -84,20 +171,21 @@ export default function ExplorePage() {
       const { data: reviewData, error: reviewError } = await supabase
         .from('reviews')
         .select('app_id, rating')
-        .in('app_id', appsData?.map(app => app.id) || []);
+        .in('app_id', appsData?.map((app: App) => app.id) || []);
 
       if (reviewError) throw reviewError;
 
       // Process the data
-      const appsWithDetails = appsData?.map(app => {
-        const installations = installData?.filter(i => i.app_id === app.id).length || 0;
-        const appReviews = reviewData?.filter(r => r.app_id === app.id) || [];
+      const appsWithDetails = appsData?.map((app: App) => {
+        const installations = installData?.filter((i: any) => i.app_id === app.id).length || 0;
+        const appReviews = reviewData?.filter((r: any) => r.app_id === app.id) || [];
         const avgRating = appReviews.length > 0
-          ? appReviews.reduce((sum, r) => sum + r.rating, 0) / appReviews.length
+          ? appReviews.reduce((sum: number, r: any) => sum + r.rating, 0) / appReviews.length
           : null;
 
         return {
           ...app,
+          micro_apps: (app as any).micro_apps || [],
           _count: {
             installations,
             reviews: appReviews.length
@@ -108,10 +196,13 @@ export default function ExplorePage() {
         };
       }) || [];
 
-      setApps(appsWithDetails);
+      // Combine with local apps
+      const allApps = [...localApps, ...appsWithDetails];
+      setApps(allApps);
     } catch (error) {
       console.error('Error fetching apps:', error);
-      toast.error('Failed to load apps');
+      // Even if database fails, show local apps
+      setApps(localApps);
     } finally {
       setLoading(false);
     }
@@ -133,7 +224,16 @@ export default function ExplorePage() {
     try {
       setActivatingApps(prev => new Set(prev).add(appId));
       
-      // Get current user
+      // Check if it's a local app
+      const app = apps.find(a => a.id === appId);
+      if (app?.id.startsWith('local-')) {
+        // For local apps, just open them directly
+        window.open(app.url, '_blank');
+        toast.success('Opening app...');
+        return;
+      }
+      
+      // Get current user for database apps
       const { data: { user }, error: userError } = await supabase.auth.getUser();
       if (userError) throw userError;
       if (!user) {
@@ -272,7 +372,11 @@ export default function ExplorePage() {
                       disabled={activatingApps.has(app.id)}
                       size="sm"
                     >
-                      {activatingApps.has(app.id) ? 'Activating...' : 'Activate'}
+                      {activatingApps.has(app.id) 
+                        ? 'Opening...' 
+                        : app.id.startsWith('local-') && app.status === 'active' 
+                        ? 'Launch App' 
+                        : 'Activate'}
                     </Button>
                   </div>
                 </div>

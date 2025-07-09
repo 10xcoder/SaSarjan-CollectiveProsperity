@@ -5,6 +5,7 @@ import '@/styles/globals.css'
 import { Providers } from './providers'
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
+import { generateNextJSMetadata } from '@repo/assets'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -12,15 +13,12 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'SaSarjan App Store - Collective Prosperity Platform',
-  description: 'Building a robust technology platform for digital and physical worlds to unite for growth',
-  keywords: ['app store', 'collective prosperity', 'social impact', 'technology for good'],
-  authors: [{ name: 'SaSarjan Team' }],
-  openGraph: {
-    title: 'SaSarjan App Store',
-    description: 'Discover apps that empower individuals, organizations, and communities',
-    type: 'website',
-  },
+  ...generateNextJSMetadata('sasarjan', {
+    title: 'SaSarjan App Store - Collective Prosperity Platform',
+    description: 'Building a robust technology platform for digital and physical worlds to unite for growth',
+    keywords: ['app store', 'collective prosperity', 'social impact', 'technology for good'],
+    author: 'SaSarjan Team',
+  }),
   manifest: '/api/manifest',
 }
 

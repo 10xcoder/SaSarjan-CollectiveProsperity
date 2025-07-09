@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 
 interface LocationBannerProps {
   className?: string
-  onLocationDetected?: (city: string) => void
+  onLocationDetected?: (_city: string) => void
 }
 
 // Mock Indian cities for demonstration

@@ -191,7 +191,7 @@ export const Interview = z.object({
   metadata: z.record(z.any()).optional(),
 });
 
-export type InterviewType = z.infer<typeof Interview>;
+export type InterviewDetailsType = z.infer<typeof Interview>;
 
 /**
  * Assessment Details
@@ -233,7 +233,7 @@ export const Assessment = z.object({
   metadata: z.record(z.any()).optional(),
 });
 
-export type AssessmentType = z.infer<typeof Assessment>;
+export type AssessmentDetailsType = z.infer<typeof Assessment>;
 
 /**
  * Application Timeline Event

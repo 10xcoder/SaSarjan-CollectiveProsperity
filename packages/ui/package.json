@@ -15,6 +15,7 @@
     "@radix-ui/react-label": "*",
     "@radix-ui/react-separator": "*",
     "@radix-ui/react-slot": "*",
+    "@repo/assets": "workspace:*",
     "class-variance-authority": "*",
     "clsx": "*",
     "lucide-react": "*",

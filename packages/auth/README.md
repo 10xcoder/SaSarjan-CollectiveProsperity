@@ -1,94 +1,154 @@
 # @sasarjan/auth
 
-Shared authentication package for the SaSarjan App Store platform. Provides centralized authentication with Single Sign-On (SSO) capabilities across all apps.
+Secure, unified authentication package for the SaSarjan ecosystem with enterprise-grade security features.
 
 ## Features
 
-- 🔐 **Single Sign-On (SSO)** - Login once, access all apps
-- 🔄 **Shared State Management** - Synchronized auth state across apps
-- 🛡️ **Secure by Default** - PKCE flow, HTTP-only cookies, proper CSRF protection
-- 📱 **Cross-App Communication** - Seamless session sharing between apps
-- 🎯 **TypeScript First** - Full type safety and excellent DX
-- ⚡ **Performance Optimized** - Minimal bundle size, efficient state updates
+### 🔐 Core Security
+- **Secure Cookies**: HTTP-only, secure, SameSite cookies with CSRF protection
+- **JWT Tokens**: RS256/ES256 signed tokens with automatic rotation
+- **Encryption**: AES-256-GCM with PBKDF2 key derivation
+- **Device Fingerprinting**: Bind sessions to devices
+- **Session Management**: Activity monitoring and automatic expiration
 
-## Installation
+### 🔄 Cross-App Sync
+- **Single Sign-On (SSO)**: Login once, access all apps
+- **HMAC Signing**: Cryptographically signed messages
+- **Replay Protection**: Nonce-based prevention
+- **Secure Communication**: Optional end-to-end encryption
+- **Shared State Management**: Synchronized auth state across apps
+
+### 🛡️ Additional Security
+- **XSS Protection**: Content sanitization
+- **CSRF Protection**: Double-submit cookie pattern
+- **Secure Storage**: Encrypted local storage
+- **Key Management**: Automatic key rotation
+- **PKCE Flow**: OAuth security enhancement
+
+## Quick Start
+
+### Installation
 
 ```bash
 pnpm add @sasarjan/auth
 ```
 
-## Basic Usage
-
-### Client-Side
+### Basic Setup
 
 ```typescript
-import { AuthService, useAuth, useAuthActions } from '@sasarjan/auth'
+// app/providers.tsx
+import { UnifiedAuthProvider } from '@sasarjan/auth/client'
 
-// Initialize auth service
-const authService = new AuthService({
-  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  redirectUrl: 'http://localhost:3000'
-})
-
-// In your React component
-function LoginForm() {
-  const { user, isAuthenticated, isLoading } = useAuth()
-  const { setSession, setLoading, setError } = useAuthActions()
-
-  const handleLogin = async (email: string, password: string) => {
-    setLoading(true)
-    try {
-      const session = await authService.signIn({ email, password })
-      setSession(session)
-    } catch (error) {
-      setError(error.message)
-    } finally {
-      setLoading(false)
-    }
+export function Providers({ children }) {
+  const authConfig = {
+    appId: 'your-app-id',
+    appName: 'Your App Name',
+    appUrl: process.env.NEXT_PUBLIC_APP_URL,
+    
+    // Security features
+    useSecureTokens: true,
+    enableSecureCrossAppSync: true,
+    hmacSecret: process.env.HMAC_SECRET_KEY,
+    
+    // Supabase config
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   }
-
-  if (isAuthenticated) {
-    return <div>Welcome, {user?.full_name}!</div>
-  }
-
-  return <LoginForm onSubmit={handleLogin} />
+  
+  return (
+    <UnifiedAuthProvider config={authConfig}>
+      {children}
+    </UnifiedAuthProvider>
+  )
 }
 ```
 
-### Server-Side
+### Using Auth in Components
 
 ```typescript
-import { AuthServer } from '@sasarjan/auth/server'
+import { useAuth } from '@sasarjan/auth/client'
 
-const authServer = new AuthServer({
-  supabaseUrl: process.env.SUPABASE_URL!,
-  supabaseAnonKey: process.env.SUPABASE_ANON_KEY!,
-  serviceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  jwtSecret: process.env.JWT_SECRET!
-})
-
-// In your API route
-export async function GET(request: Request) {
-  const token = request.headers.get('authorization')?.replace('Bearer ', '')
-
-  if (!token) {
-    return new Response('Unauthorized', { status: 401 })
-  }
-
-  const user = await authServer.verifyToken(token)
-
+function MyComponent() {
+  const { user, signIn, signOut, isLoading } = useAuth()
+  
+  if (isLoading) return <div>Loading...</div>
+  
   if (!user) {
-    return new Response('Invalid token', { status: 401 })
+    return (
+      <button onClick={() => signIn('email@example.com', 'password')}>
+        Sign In
+      </button>
+    )
   }
-
-  return Response.json({ user })
+  
+  return (
+    <div>
+      <p>Welcome {user.email}</p>
+      <button onClick={signOut}>Sign Out</button>
+    </div>
+  )
 }
 ```
 
-## Cross-App Authentication
+### Protected Routes
 
-The package automatically synchronizes authentication state across all apps in the same domain:
+```typescript
+import { ProtectedRoute } from '@sasarjan/auth/client'
+
+function AdminPage() {
+  return (
+    <ProtectedRoute redirectTo="/login">
+      <h1>Admin Dashboard</h1>
+      {/* Protected content */}
+    </ProtectedRoute>
+  )
+}
+```
+
+## Advanced Features
+
+### Secure Cross-App Sync
+
+Enable secure communication between apps:
+
+```typescript
+const authConfig = {
+  enableSecureCrossAppSync: true,
+  hmacSecret: process.env.HMAC_SECRET_KEY,
+}
+```
+
+Features:
+- HMAC-SHA256 message signing
+- Nonce-based replay protection
+- Message age validation (5-minute TTL)
+- Trusted app registry
+
+### Custom Session Timeout
+
+```typescript
+const authConfig = {
+  sessionTimeout: 24 * 60 * 60 * 1000, // 24 hours
+  activityTimeout: 30 * 60 * 1000, // 30 minutes
+}
+```
+
+### Server-Side Usage
+
+For API routes:
+
+```typescript
+import { jwtProtection, getRequestUser } from '@sasarjan/auth/server'
+
+// Protect API route
+export const POST = jwtProtection(async (req) => {
+  const user = await getRequestUser(req)
+  
+  // Your protected logic here
+})
+```
+
+### Cross-App Authentication Events
 
 ```typescript
 import { useAuthActions } from '@sasarjan/auth'
@@ -121,14 +181,39 @@ function App() {
 }
 ```
 
-## Configuration
+## Security Best Practices
 
-### Environment Variables
+1. **Environment Variables**
+   - Never commit secrets to git
+   - Use strong, random HMAC secrets (32+ characters)
+   - Rotate keys periodically
+
+2. **Cookie Settings**
+   - Always use HTTPS in production
+   - Set proper cookie domain
+   - Enable SameSite protection
+
+3. **Token Management**
+   - Enable automatic rotation
+   - Use short token lifetimes
+   - Implement refresh tokens
+
+4. **Cross-App Security**
+   - Register trusted apps only
+   - Verify message signatures
+   - Monitor for anomalies
+
+## Environment Variables
 
 ```bash
 # Required
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Recommended for production
+HMAC_SECRET_KEY=your-very-secure-random-key-at-least-32-chars
+NEXT_PUBLIC_COOKIE_DOMAIN=.yourdomain.com
+TOKEN_ENCRYPTION_KEY=another-secure-random-key
 
 # Server-side only
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
@@ -138,63 +223,83 @@ JWT_SECRET=your_jwt_secret
 NEXT_PUBLIC_AUTH_REDIRECT_URL=http://localhost:3000
 ```
 
-### Advanced Configuration
-
-```typescript
-import { createAuthConfig } from '@sasarjan/auth'
-
-const config = createAuthConfig({
-  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  redirectUrl: 'http://localhost:3000/auth/callback',
-  storageKey: 'my-app-auth',
-  autoRefreshToken: true,
-  persistSession: true,
-  detectSessionInUrl: true
-})
-```
-
 ## API Reference
-
-### AuthService
-
-Core authentication service for client-side operations.
-
-#### Methods
-
-- `getSession(): Promise<AuthSession | null>`
-- `getUser(): Promise<User | null>`
-- `signIn(credentials: LoginCredentials): Promise<AuthSession>`
-- `signUp(data: RegistrationData): Promise<AuthSession | null>`
-- `signInWithOAuth(config: OAuthConfig): Promise<void>`
-- `signOut(): Promise<void>`
-- `resetPassword(data: PasswordResetData): Promise<void>`
-- `refreshSession(): Promise<AuthSession>`
-
-### AuthServer
-
-Server-side authentication utilities.
-
-#### Methods
-
-- `verifyToken(token: string): Promise<User | null>`
-- `createToken(user: User): Promise<string>`
-- `getUserById(userId: string): Promise<User | null>`
-- `validateSession(token: string): Promise<{user: User, session: AuthSession} | null>`
 
 ### Hooks
 
-- `useAuth()` - Get current auth state
-- `useAuthActions()` - Get auth actions and event system
+- `useAuth()` - Main auth hook with all methods
+- `useUser()` - Get current user
+- `useSession()` - Get current session
+- `useRequireAuth()` - Require authentication
 
-## Security Considerations
+### Components
 
-- Uses PKCE flow for OAuth
-- HTTP-only cookies for sensitive tokens
-- Automatic token refresh
-- Cross-app communication uses secure postMessage
-- All tokens are validated server-side
-- Built-in CSRF protection
+- `UnifiedAuthProvider` - Auth context provider
+- `ProtectedRoute` - Route protection
+- `LoginForm` - Ready-to-use login form
+
+### Services
+
+- `AuthService` - Core authentication service
+- `AuthServer` - Server-side utilities
+- `SessionManager` - Session management
+- `SecureTokenManager` - Token handling
+
+### Utilities
+
+- `getHMACValidator()` - HMAC signing
+- `getKeyExchange()` - Key exchange utilities
+- `getSecureMessaging()` - Encrypted messaging
+- `getNonceManager()` - Replay protection
+
+## Examples
+
+See the `/examples` directory for:
+- Basic authentication
+- Cross-app sync setup
+- Secure messaging
+- Server-side auth
+- Custom implementations
+
+## Migration Guide
+
+### From localStorage to Secure Cookies
+
+The auth package automatically migrates existing localStorage tokens to secure cookies:
+
+```typescript
+// Automatic migration happens on initialization
+// No code changes required
+```
+
+### From Basic to Secure Cross-App Sync
+
+```typescript
+// Change from:
+enableCrossAppSync: true
+
+// To:
+enableSecureCrossAppSync: true
+hmacSecret: process.env.HMAC_SECRET_KEY
+```
+
+## Security Features Summary
+
+✅ **Implemented**
+- Secure HTTP-only cookies
+- CSRF protection
+- JWT token rotation
+- Device fingerprinting
+- AES-256-GCM encryption
+- HMAC message signing
+- Replay attack prevention
+- Cross-app SSO
+
+🔜 **Future Enhancements** (see [future-security-backlog.md](./docs/future-security-backlog.md))
+- Rate limiting
+- Fraud detection
+- Advanced monitoring
+- Compliance features
 
 ## Contributing
 

@@ -1,4 +1,5 @@
 import { createSecureStorage } from '../utils/storage'
+import { createSecureCookieStorage, migrateFromLocalStorage, type SecureCookieStorage } from '../utils/cookie-storage'
 import type { AuthSession } from '../types'
 
 interface TokenPair {
@@ -13,27 +14,53 @@ interface TokenManagerConfig {
   enableEncryption?: boolean
   tokenRotation?: boolean
   maxRetries?: number
+  useCookies?: boolean
+  cookieDomain?: string
+}
+
+interface RequiredTokenManagerConfig extends Omit<Required<TokenManagerConfig>, 'cookieDomain'> {
+  cookieDomain: string | undefined
 }
 
 export class TokenManager {
-  private storage: ReturnType<typeof createSecureStorage>
-  private config: Required<TokenManagerConfig>
+  private storage: ReturnType<typeof createSecureStorage> | SecureCookieStorage
+  private config: RequiredTokenManagerConfig
   private tokenCache: Map<string, TokenPair>
   private rotationTimers: Map<string, NodeJS.Timeout>
+  private csrfToken: string | null = null
   
   constructor(config: TokenManagerConfig = {}) {
     this.config = {
       storagePrefix: config.storagePrefix || 'sasarjan-tokens',
       enableEncryption: config.enableEncryption ?? true,
       tokenRotation: config.tokenRotation ?? true,
-      maxRetries: config.maxRetries || 3
+      maxRetries: config.maxRetries || 3,
+      useCookies: config.useCookies ?? true,
+      cookieDomain: config.cookieDomain
     }
     
-    this.storage = createSecureStorage(this.config.storagePrefix)
+    // Use cookie storage by default for better security
+    if (this.config.useCookies) {
+      this.storage = createSecureCookieStorage(this.config.storagePrefix, {
+        domain: this.config.cookieDomain
+      })
+      
+      // Migrate tokens from localStorage to cookies if needed
+      this.migrateTokens()
+    } else {
+      this.storage = createSecureStorage(this.config.storagePrefix)
+    }
+    
     this.tokenCache = new Map()
     this.rotationTimers = new Map()
     
     this.loadTokensFromStorage()
+  }
+  
+  private async migrateTokens() {
+    if (typeof window !== 'undefined' && this.storage && 'getCsrfToken' in this.storage) {
+      await migrateFromLocalStorage(this.storage as SecureCookieStorage, this.config.storagePrefix)
+    }
   }
   
   private loadTokensFromStorage() {
@@ -244,11 +271,36 @@ export class TokenManager {
   
   getAuthHeaders(): Record<string, string> {
     const token = this.getAccessToken()
-    if (!token) return {}
+    const headers: Record<string, string> = {}
     
-    return {
-      'Authorization': `Bearer ${token}`
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`
     }
+    
+    // Add CSRF token if using cookies
+    if (this.config.useCookies && 'getCsrfToken' in this.storage) {
+      const csrfToken = this.getCsrfToken()
+      if (csrfToken) {
+        headers['X-CSRF-Token'] = csrfToken
+      }
+    }
+    
+    return headers
+  }
+  
+  getCsrfToken(): string | null {
+    if (this.config.useCookies && 'getCsrfToken' in this.storage) {
+      this.csrfToken = (this.storage as SecureCookieStorage).getCsrfToken()
+      return this.csrfToken
+    }
+    return null
+  }
+  
+  validateCsrfToken(token: string): boolean {
+    if (this.config.useCookies && 'validateCsrfToken' in this.storage) {
+      return (this.storage as SecureCookieStorage).validateCsrfToken(token)
+    }
+    return false
   }
   
   destroy() {

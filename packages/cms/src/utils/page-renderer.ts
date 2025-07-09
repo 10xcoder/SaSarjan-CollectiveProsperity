@@ -125,7 +125,7 @@ export class PageRenderer {
         content = this.renderProsperityCategoriesBlock(block as any);
         break;
       default:
-        content = `<!-- Unknown block type: ${block.type} -->`;
+        content = `<!-- Unknown block type: ${(block as any).type} -->`;
     }
 
     return `

@@ -8,7 +8,7 @@ test.describe('Admin Authentication', () => {
     await adminHelpers.loginAsAdmin();
     
     // Should be redirected to dashboard
-    await expect(page).toHaveURL('/dashboard');
+    await expect(page).toHaveURL('/');
     await expect(page.locator('[data-testid="dashboard-header"]')).toBeVisible();
   });
 
@@ -21,7 +21,7 @@ test.describe('Admin Authentication', () => {
     
     // Should show error message
     await expect(page.locator('[data-testid="error-message"]')).toBeVisible();
-    await expect(page.locator('[data-testid="error-message"]')).toContainText('Invalid credentials');
+    await expect(page.locator('[data-testid="error-message"]')).toContainText('Invalid email or password');
   });
 
   test('should logout successfully', async ({ page, adminHelpers }) => {
@@ -33,7 +33,7 @@ test.describe('Admin Authentication', () => {
   });
 
   test('should redirect to login when accessing protected routes without auth', async ({ page }) => {
-    await page.goto('/dashboard');
+    await page.goto('/users');
     
     // Should be redirected to login
     await expect(page).toHaveURL('/auth/login');

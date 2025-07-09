@@ -1,6 +1,9 @@
 import { z } from 'zod';
 import { BaseProfileSchema } from './base-profile';
 
+// Re-export BaseProfileSchema for tests
+export { BaseProfileSchema };
+
 export const SkillSchema = z.object({
   name: z.string(),
   level: z.enum(['beginner', 'intermediate', 'advanced', 'expert']),

@@ -7,7 +7,19 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "generate-keys": "tsx scripts/generate-jwt-keys.ts",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch",
+    "test:integration": "playwright test",
+    "test:integration:ui": "playwright test --ui",
+    "test:integration:headed": "playwright test --headed",
+    "test:security": "vitest run tests/security",
+    "test:all": "pnpm test:run && pnpm test:integration",
+    "test:ci": "vitest run --coverage --reporter=junit --outputFile=test-results.xml"
   },
   "keywords": [
     "auth",
@@ -19,22 +31,28 @@
   "license": "MIT",
   "dependencies": {
     "@supabase/supabase-js": "^2.50.3",
+    "@types/cookie": "^1.0.0",
+    "cookie": "^1.0.2",
     "jose": "^5.2.0",
     "nanoid": "^5.0.4",
     "zustand": "^5.0.2"
   },
   "peerDependencies": {
-    "@radix-ui/react-checkbox": "^1.0.0",
-    "framer-motion": "^11.0.0",
-    "lucide-react": "^0.400.0",
-    "react": "^18.0.0",
-    "zod": "^3.22.0"
+    "react": "^18.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.16.0",
     "@types/react": "^18.3.23",
-    "react": "^19.0.0",
-    "typescript": "^5.5.4"
+    "@playwright/test": "^1.53.2",
+    "@vitest/coverage-v8": "^2.1.0",
+    "@vitest/ui": "^2.1.0",
+    "jsdom": "^25.0.0",
+    "playwright": "^1.53.2",
+    "react": "^18.0.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.0",
+    "whatwg-fetch": "^3.6.2"
   },
   "exports": {
     ".": {

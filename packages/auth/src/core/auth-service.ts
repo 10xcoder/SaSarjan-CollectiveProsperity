@@ -184,12 +184,16 @@ export class AuthService {
   }
 
   // Update password
-  async updatePassword(newPassword: string): Promise<void> {
+  async updatePassword(newPassword: string): Promise<{ user?: User }> {
     try {
-      const { error } = await this.supabase.auth.updateUser({
+      const { data, error } = await this.supabase.auth.updateUser({
         password: newPassword
       })
       if (error) throw this.createAuthError(error)
+      
+      return {
+        user: data.user ? this.transformUser(data.user) : undefined
+      }
     } catch (error) {
       throw this.handleError(error)
     }
@@ -220,6 +224,22 @@ export class AuthService {
       const transformedSession = session ? this.transformSession(session) : null
       callback(transformedSession)
     })
+  }
+  
+  // Update profile
+  async updateProfile(updates: Partial<User>): Promise<User> {
+    try {
+      const { data: { user }, error } = await this.supabase.auth.updateUser({
+        data: updates
+      })
+      
+      if (error) throw this.createAuthError(error)
+      if (!user) throw new Error('No user returned')
+      
+      return this.transformUser(user)
+    } catch (error) {
+      throw this.handleError(error)
+    }
   }
 
   // Test connection

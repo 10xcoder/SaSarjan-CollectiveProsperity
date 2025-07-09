@@ -3,8 +3,8 @@ export * from './page';
 export * from './blog';
 export * from './templates';
 
-// Re-export commonly used types
-export type {
+// Import types for use in interfaces
+import type {
   CMSPageType,
   PageTypeType,
   PageStatusType,
@@ -17,7 +17,7 @@ export type {
   PageAnalyticsType,
 } from './page';
 
-export type {
+import type {
   BlogPostType,
   BlogCategoryType,
   BlogTagType,
@@ -31,7 +31,7 @@ export type {
   ContentFormatType,
 } from './blog';
 
-export type {
+import type {
   CMSTemplateType,
   TemplateTypeType,
   TemplateCategoryType,

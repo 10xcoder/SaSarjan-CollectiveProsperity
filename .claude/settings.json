@@ -1,0 +1,89 @@
+{
+  "$schema": "https://claude-code.anthropic.com/schemas/settings.json",
+  "project": {
+    "name": "SaSarjan AppStore",
+    "description": "Multi-tenant app marketplace platform"
+  },
+  "environment": {
+    "TZ": "Asia/Kolkata",
+    "NODE_ENV": "development"
+  },
+  "permissions": {
+    "tools": {
+      "allow": [
+        "Read",
+        "Write",
+        "Edit",
+        "MultiEdit",
+        "Bash",
+        "Grep",
+        "Glob",
+        "LS",
+        "Task",
+        "WebFetch",
+        "WebSearch",
+        "TodoRead",
+        "TodoWrite"
+      ]
+    }
+  },
+  "cleanup": {
+    "periodMs": 3600000,
+    "maxSessionAgeMs": 86400000
+  },
+  "defaults": {
+    "compactThreshold": 0.95,
+    "autoCompact": true,
+    "streamingJson": true
+  },
+  "customCommands": {
+    "/build": "pnpm build",
+    "/dev": "pnpm dev",
+    "/typecheck": "pnpm typecheck",
+    "/lint": "pnpm lint",
+    "/test": "pnpm test",
+    "/ist": "TZ='Asia/Kolkata' date +'%d-%b-%Y, %A %H:%M IST'",
+    "/todos": "cat /plan/claude-todos/active-todos.json | jq",
+    "/context": "cat /plan/claude-todos/minimal-context.md",
+    "/sync": "cat /plan/claude-todos/session-sync.md"
+  },
+  "workflowHints": {
+    "searchStrategy": "Use Task tool for complex searches",
+    "tokenOptimization": "Start with minimal context, load progressively",
+    "fileExclusions": "Avoid node_modules, .next, dist, build directories"
+  },
+  "projectStructure": {
+    "apps": [
+      "web",
+      "admin",
+      "talentexcel",
+      "sevapremi",
+      "10xgrowth"
+    ],
+    "packages": [
+      "auth",
+      "cms",
+      "job-board",
+      "knowledge-library",
+      "profile-core",
+      "ui",
+      "database",
+      "types"
+    ]
+  },
+  "buildCommands": {
+    "all": "pnpm build",
+    "dev": "pnpm dev",
+    "typecheck": "pnpm typecheck",
+    "lint": "pnpm lint",
+    "test": "pnpm test"
+  },
+  "monorepo": {
+    "type": "turborepo",
+    "packageManager": "pnpm",
+    "workspaces": [
+      "apps/*",
+      "packages/*"
+    ]
+  }
+}

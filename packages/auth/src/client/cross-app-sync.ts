@@ -220,6 +220,25 @@ export class CrossAppSyncService {
     })
   }
   
+  subscribeToAuthEvents(handler: (event: AuthEvent) => void): () => void {
+    const store = useAuthStore.getState()
+    return store.addEventListener(handler)
+  }
+  
+  broadcastAuthEvent(event: AuthEvent) {
+    this.broadcast(event)
+  }
+  
+  broadcast(event: AuthEvent) {
+    this.sendMessage({
+      type: 'SESSION_UPDATE',
+      source: this.appId,
+      payload: { event },
+      timestamp: Date.now(),
+      nonce: this.generateNonce()
+    })
+  }
+  
   destroy() {
     if (this.syncChannel) {
       this.syncChannel.close()

@@ -53,6 +53,19 @@ const nextConfig = {
         source: '/manifest.json',
         destination: '/api/manifest',
       },
+      // Serve assets from @repo/assets package
+      {
+        source: '/logos/:path*',
+        destination: '/assets/logos/:path*',
+      },
+      {
+        source: '/favicons/:path*',
+        destination: '/assets/favicons/:path*',
+      },
+      {
+        source: '/icons/:path*',
+        destination: '/assets/icons/:path*',
+      },
     ];
   },
 };

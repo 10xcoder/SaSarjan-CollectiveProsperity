@@ -7,3 +7,5 @@ export * from './src/components/marketplace/SearchFilters';
 export * from './src/components/profile/ProfileForm';
 export * from './src/components/profile/ProfileManager';
 export * from './src/components/registry/PackageRegistry';
+export * from './components/logo';
+export * from './components/favicon-provider';

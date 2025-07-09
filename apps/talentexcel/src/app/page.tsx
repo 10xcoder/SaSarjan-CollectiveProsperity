@@ -26,7 +26,7 @@ export default function HomePage() {
             Excel in Your Career Journey
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Discover internships, fellowships, and learning opportunities. Connect with mentors and build the career you've always dreamed of.
+            Discover internships, fellowships, and learning opportunities. Connect with mentors and build the career you&apos;ve always dreamed of.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link href="/opportunities">
@@ -112,7 +112,7 @@ export default function HomePage() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Get guidance from experienced professionals who've walked the path you're on.
+                  Get guidance from experienced professionals who&apos;ve walked the path you&apos;re on.
                 </p>
               </CardContent>
             </Card>

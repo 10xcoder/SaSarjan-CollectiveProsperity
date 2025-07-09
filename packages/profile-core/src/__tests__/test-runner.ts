@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { execSync } from 'child_process';
+import './standalone-setup'; // Import standalone setup to initialize mocks
 import { ProfileCRUD } from '../api/profile-crud';
 import { ProfileCloneService } from '../api/profile-clone';
 import { ProfileSyncService } from '../api/profile-sync';
@@ -153,10 +154,10 @@ class ProfileTestRunner {
         );
         console.error(`    ❌ Validation should have failed for: ${testCase.name}`);
       } catch (error) {
-        if (error.message.includes(testCase.expectedError)) {
+        if (error instanceof Error && error.message.includes(testCase.expectedError)) {
           validationTestsPassed++;
         } else {
-          console.error(`    ❌ Wrong error for ${testCase.name}:`, error.message);
+          console.error(`    ❌ Wrong error for ${testCase.name}:`, error instanceof Error ? error.message : error);
         }
       }
     }
@@ -181,12 +182,12 @@ class ProfileTestRunner {
 
     for (const scenario of searchScenarios) {
       try {
-        const result = await this.profileCrud.searchProfiles(scenario.filters, 50, 0);
+        const result = await this.profileCrud.searchProfiles(scenario.filters as any, 50, 0);
         
         // Mock search would return all profiles, so we simulate filtering
         let filteredCount = freelancers.length;
         if (scenario.filters.category) {
-          filteredCount = freelancers.filter(p => p.category === scenario.filters.category).length;
+          filteredCount = freelancers.filter(p => (p as any).category === scenario.filters.category).length;
         }
         
         if (result.profiles.length > 0) {
@@ -257,13 +258,13 @@ class ProfileTestRunner {
       try {
         switch (test.name) {
           case 'Large profile creation':
-            const profiles = generateBulkProfiles(test.profileCount, 'freelancer');
+            const profiles = generateBulkProfiles(test.profileCount || 1000, 'freelancer');
             // Simulate time for processing
             await new Promise(resolve => setTimeout(resolve, 10));
             break;
             
           case 'Complex search queries':
-            for (let i = 0; i < test.searchCount; i++) {
+            for (let i = 0; i < (test.searchCount || 100); i++) {
               await this.profileCrud.searchProfiles({
                 type: 'freelancer',
                 category: 'tech',
@@ -274,7 +275,7 @@ class ProfileTestRunner {
             
           case 'Bulk profile sync':
             // Simulate sync operations
-            for (let i = 0; i < test.syncCount; i++) {
+            for (let i = 0; i < (test.syncCount || 50); i++) {
               await this.syncService.syncProfiles(`source-${i}`, [`target-${i}`]);
             }
             break;

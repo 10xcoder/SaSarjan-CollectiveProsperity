@@ -16,7 +16,7 @@ interface ProsperityWheelProps {
   size?: number
   interactive?: boolean
   selectedCategory?: string
-  onCategorySelect?: (categoryId: string) => void
+  onCategorySelect?: (_categoryId: string) => void
   className?: string
 }
 

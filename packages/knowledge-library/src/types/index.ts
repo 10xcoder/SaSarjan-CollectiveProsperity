@@ -3,6 +3,21 @@ export * from './content';
 export * from './search';
 export * from './analytics';
 
+// Import types for local use
+import type {
+  KnowledgeContentType,
+} from './content';
+
+import type {
+  SearchQueryType,
+  SearchResultType,
+  SearchAnalyticsType,
+} from './search';
+
+import type {
+  AnalyticsEventType,
+} from './analytics';
+
 // Re-export commonly used types
 export type {
   KnowledgeContentType,
@@ -43,7 +58,7 @@ export type {
   ContentAnalyticsType,
   AuthorAnalyticsType,
   PlatformAnalyticsType,
-  SearchAnalyticsType,
+  SearchMetricsAnalyticsType,
   AnalyticsReportType,
 } from './analytics';
 

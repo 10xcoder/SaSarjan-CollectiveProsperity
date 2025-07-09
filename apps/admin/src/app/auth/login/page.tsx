@@ -26,7 +26,7 @@ export default function AdminLogin() {
     try {
       await signIn(email, password)
       router.push('/')
-    } catch (err) {
+    } catch {
       setError('Invalid email or password. Admin access only.')
     } finally {
       setLoading(false)
@@ -60,7 +60,7 @@ export default function AdminLogin() {
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
               {error && (
-                <div className="flex items-center space-x-2 text-red-600 dark:text-red-400 text-sm">
+                <div className="flex items-center space-x-2 text-red-600 dark:text-red-400 text-sm" data-testid="error-message">
                   <AlertCircle className="h-4 w-4" />
                   <span>{error}</span>
                 </div>
@@ -70,6 +70,7 @@ export default function AdminLogin() {
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
+                  data-testid="email-input"
                   type="email"
                   placeholder="admin@sasarjan.com"
                   value={email}
@@ -83,6 +84,7 @@ export default function AdminLogin() {
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
+                  data-testid="password-input"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -95,6 +97,7 @@ export default function AdminLogin() {
             <CardFooter className="flex flex-col space-y-4">
               <Button 
                 type="submit" 
+                data-testid="login-button"
                 className="w-full bg-purple-600 hover:bg-purple-700"
                 disabled={loading}
               >

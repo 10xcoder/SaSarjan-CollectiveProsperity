@@ -70,6 +70,7 @@ _Detailed documentation for specific features_
 | [Location Services Architecture](./Location_Services_Architecture.md) | Geo-based features         | 04-Jul-2025 09:36 IST |
 | [Theme Configuration System](./Theme_Configuration_System.md)         | Dynamic theming            | 04-Jul-2025 09:39 IST |
 | [Tags System](./Tags_System.md)                                       | Tagging and categorization | 04-Jul-2025 10:32 IST |
+| [Asset Management Guide](./assets/asset-management-guide.md)          | Centralized logos & assets | 09-Jul-2025 |
 
 ### 👩‍💻 Development Process
 
@@ -96,6 +97,8 @@ _Documentation for individual packages_
 | Document                                          | Description                 | Last Modified         |
 | ------------------------------------------------- | --------------------------- | --------------------- |
 | [Auth Package README](../packages/auth/README.md) | Authentication package docs | 04-Jul-2025 18:19 IST |
+| [Asset Management Guide](./assets/asset-management-guide.md) | Centralized asset management | 09-Jul-2025 |
+| [Asset Implementation Details](./assets/implementation-details.md) | Technical implementation details | 09-Jul-2025 |
 
 ### 🗄️ Archived Documents
 
@@ -125,7 +128,10 @@ SaSarjan-AppStore/
 │   ├── 🏗️ Architecture documents
 │   ├── 🔧 Feature documentation
 │   ├── 👩‍💻 Development guides
-│   └── 🌍 Framework documents
+│   ├── 🌍 Framework documents
+│   └── 📁 assets/
+│       ├── 📘 asset-management-guide.md
+│       └── 🔧 implementation-details.md
 │
 ├── 📁 plan/
 │   ├── 🎯 roadmap.md

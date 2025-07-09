@@ -1,10 +1,9 @@
 'use client'
 
 import { ThemeProvider } from 'next-themes'
-import { NextIntlClientProvider } from 'next-intl'
-import { AuthProvider } from '@sasarjan/auth/client-only'
-import { createCrossAppSync } from '@sasarjan/auth'
 import { useEffect } from 'react'
+import { UnifiedAuthProvider } from '@sasarjan/auth/client-only'
+import type { UnifiedAuthConfig } from '@sasarjan/auth/client-only'
 
 interface ProvidersProps {
   children: React.ReactNode
@@ -12,65 +11,48 @@ interface ProvidersProps {
 }
 
 export function Providers({ children, appId }: ProvidersProps) {
+  const authConfig: UnifiedAuthConfig = {
+    appId: 'talentexcel',
+    appName: 'TalentExcel',
+    appUrl: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001',
+    
+    // Security features
+    useSecureTokens: true,
+    enableSecureCrossAppSync: true, // Using secure sync with HMAC
+    hmacSecret: process.env.HMAC_SECRET_KEY,
+    cookieDomain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN,
+    
+    // Session configuration
+    sessionTimeout: 24 * 60 * 60 * 1000, // 24 hours
+    activityTimeout: 30 * 60 * 1000, // 30 minutes
+    
+    // Supabase configuration
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  }
+  
   useEffect(() => {
-    // Initialize cross-app SSO sync
-    const crossAppSync = createCrossAppSync(
-      process.env.NODE_ENV === 'development' ? 'talentexcel-dev' : 'talentexcel'
-    )
+    // Skip initialization during build/SSR
+    if (typeof window === 'undefined') return
     
-    // Register trusted apps
-    crossAppSync.registerApp({
-      appId: 'sasarjan-main',
-      origin: process.env.NODE_ENV === 'development' 
-        ? 'http://localhost:3000' 
-        : 'https://sasarjan.com',
-      permissions: ['read_session', 'write_session']
-    })
-    
-    crossAppSync.registerApp({
-      appId: 'sevapremi',
-      origin: process.env.NODE_ENV === 'development' 
-        ? 'http://localhost:3002' 
-        : 'https://sevapremi.com',
-      permissions: ['read_session', 'write_session']
-    })
-    
-    crossAppSync.registerApp({
-      appId: '10xgrowth',
-      origin: process.env.NODE_ENV === 'development' 
-        ? 'http://localhost:3003' 
-        : 'https://10xgrowth.com',
-      permissions: ['read_session', 'write_session']
-    })
-    
-    // Check for existing session from other apps
-    crossAppSync.requestSessionFromApps()
-    
-    return () => {
-      crossAppSync.destroy()
+    try {
+      console.log('TalentExcel app initialized:', appId)
+    } catch (error) {
+      console.error('App initialization failed:', error)
     }
-  }, [])
+  }, [appId])
   
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
-      themes={['light', 'dark', 'talent-blue']}
-    >
-      <NextIntlClientProvider>
-        <AuthProvider
-          config={{
-            appName: 'TalentExcel',
-            appUrl: process.env.NEXT_PUBLIC_APP_URL || 'https://talentexcel.com',
-            supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
-            supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-          }}
-        >
-          {children}
-        </AuthProvider>
-      </NextIntlClientProvider>
-    </ThemeProvider>
+    <UnifiedAuthProvider config={authConfig}>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+        themes={['light', 'dark', 'talent-blue']}
+      >
+        {children as any}
+      </ThemeProvider>
+    </UnifiedAuthProvider>
   )
 }

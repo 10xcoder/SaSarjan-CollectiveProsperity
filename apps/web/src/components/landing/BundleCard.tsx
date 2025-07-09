@@ -24,7 +24,7 @@ export interface Bundle {
 interface BundleCardProps {
   bundle: Bundle
   className?: string
-  onSelect?: (bundleId: string) => void
+  onSelect?: (_bundleId: string) => void
 }
 
 export function BundleCard({ bundle, className, onSelect }: BundleCardProps) {

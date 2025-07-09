@@ -450,6 +450,21 @@ export const ContentBlock = z.discriminatedUnion('type', [
 
 export type ContentBlockType = z.infer<typeof ContentBlock>;
 
+// Individual block types
+export type HeroBlockType = z.infer<typeof HeroBlock>;
+export type FeaturesBlockType = z.infer<typeof FeaturesBlock>;
+export type TextBlockType = z.infer<typeof TextBlock>;
+export type ImageBlockType = z.infer<typeof ImageBlock>;
+export type VideoBlockType = z.infer<typeof VideoBlock>;
+export type CTABlockType = z.infer<typeof CTABlock>;
+export type TestimonialsBlockType = z.infer<typeof TestimonialsBlock>;
+export type FAQBlockType = z.infer<typeof FAQBlock>;
+export type FormBlockType = z.infer<typeof FormBlock>;
+export type StatsBlockType = z.infer<typeof StatsBlock>;
+export type TeamBlockType = z.infer<typeof TeamBlock>;
+export type AppsShowcaseBlockType = z.infer<typeof AppsShowcaseBlock>;
+export type ProsperityCategoriesBlockType = z.infer<typeof ProsperityCategoriesBlock>;
+
 /**
  * Page Version
  */

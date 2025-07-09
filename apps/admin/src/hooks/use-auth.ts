@@ -1,77 +1,62 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useUnifiedAuth } from '@sasarjan/auth/client-only'
 import { supabase } from '@/lib/supabase'
-import type { User } from '@supabase/supabase-js'
+import { useCallback } from 'react'
 
-interface UseAuthReturn {
-  user: User | null
-  isLoading: boolean
-  signIn: (email: string, password: string) => Promise<void>
-  signOut: () => Promise<void>
-}
-
-export function useAuth(): UseAuthReturn {
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    // Get initial session
-    const getInitialSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      setUser(session?.user ?? null)
-      setIsLoading(false)
-    }
-
-    getInitialSession()
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setUser(session?.user ?? null)
-        setIsLoading(false)
-      }
-    )
-
-    return () => subscription.unsubscribe()
-  }, [])
-
-  const signIn = async (email: string, password: string) => {
-    const { error, data } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-
-    if (error) {
-      throw error
-    }
-
-    // Check if user is admin
-    if (data.user) {
+export function useAuth() {
+  const auth = useUnifiedAuth()
+  
+  // Override signIn to add admin validation
+  const signIn = useCallback(async (email: string, password: string) => {
+    try {
+      // First authenticate with the unified auth
+      await auth.signIn(email, password)
+      
+      // Then check if user is admin
       const { data: adminData, error: adminError } = await supabase
         .from('admin_users')
         .select('role, status')
-        .eq('email', data.user.email)
+        .eq('email', email)
         .single()
 
       if (adminError || !adminData || adminData.status !== 'active') {
-        await supabase.auth.signOut()
+        await auth.signOut()
         throw new Error('Admin access required')
       }
-    }
-  }
-
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut()
-    if (error) {
+      
+      // Store admin role in session
+      sessionStorage.setItem('admin_role', adminData.role)
+    } catch (error) {
       throw error
     }
-  }
-
+  }, [auth])
+  
+  // Add admin-specific methods
+  const getAdminRole = useCallback(() => {
+    return sessionStorage.getItem('admin_role')
+  }, [])
+  
+  const isAdmin = useCallback(() => {
+    return !!auth.user && !!getAdminRole()
+  }, [auth.user, getAdminRole])
+  
+  const isSuperAdmin = useCallback(() => {
+    return getAdminRole() === 'super_admin'
+  }, [getAdminRole])
+  
+  // Override signOut to clear admin data
+  const signOut = useCallback(async () => {
+    sessionStorage.removeItem('admin_role')
+    await auth.signOut()
+  }, [auth])
+  
   return {
-    user,
-    isLoading,
-    signIn,
-    signOut,
+    ...auth,
+    signIn, // Override with admin-specific signIn
+    signOut, // Override to clear admin data
+    getAdminRole,
+    isAdmin,
+    isSuperAdmin,
   }
 }

@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google'
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 import '@/styles/globals.css'
 import { Providers } from './providers'
 import { Navigation } from '@/components/navigation'
@@ -35,6 +35,9 @@ export const metadata: Metadata = {
     creator: '@talentexcel',
   },
   manifest: '/api/manifest',
+}
+
+export const viewport: Viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#2563eb' },
     { media: '(prefers-color-scheme: dark)', color: '#1e40af' },

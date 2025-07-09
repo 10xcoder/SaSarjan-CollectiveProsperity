@@ -176,7 +176,7 @@ export const adminQueries = {
 
   // Get user breakdown by type
   async getUserBreakdown() {
-    const { data: users, count: totalUsers } = await supabase
+    const { data: _users, count: totalUsers } = await supabase
       .from('users')
       .select('id, email, profession', { count: 'exact' })
 
@@ -189,7 +189,7 @@ export const adminQueries = {
       .select('user_id')
       .eq('status', 'active')
 
-    const adminEmails = new Set(adminUsers?.map(a => a.email) || [])
+    const _adminEmails = new Set(adminUsers?.map(a => a.email) || [])
     const activeUserIds = new Set(appInstallations?.map(i => i.user_id) || [])
     
     // Count users with multiple app installations
@@ -379,7 +379,7 @@ export const adminQueries = {
   },
 
   // Get app popularity metrics
-  async getAppRevenues(dateRange = '30days') {
+  async getAppRevenues(_dateRange = '30days') {
     const { data: apps } = await supabase
       .from('apps')
       .select(`

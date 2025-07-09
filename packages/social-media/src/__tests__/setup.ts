@@ -1,28 +1,35 @@
 import { vi } from 'vitest';
 import '@testing-library/jest-dom';
 
+// Create a flexible mock query builder that chains methods
+const createMockQuery = (finalResult = { data: null, error: null }) => {
+  const mockQuery = {
+    eq: vi.fn(() => mockQuery),
+    neq: vi.fn(() => mockQuery),
+    contains: vi.fn(() => mockQuery),
+    order: vi.fn(() => mockQuery),
+    limit: vi.fn(() => mockQuery),
+    range: vi.fn(() => Promise.resolve(finalResult)),
+    single: vi.fn(() => Promise.resolve(finalResult)),
+    then: vi.fn((callback) => Promise.resolve(finalResult).then(callback)),
+  };
+  return mockQuery;
+};
+
 // Mock Supabase
 const mockSupabaseClient = {
-  from: vi.fn(() => ({
-    select: vi.fn(() => ({
-      eq: vi.fn(() => ({
-        single: vi.fn(() => Promise.resolve({ data: null, error: null })),
-        order: vi.fn(() => Promise.resolve({ data: [], error: null })),
-      })),
+  from: vi.fn(() => {
+    const mockTable = {
+      select: vi.fn(() => createMockQuery()),
       insert: vi.fn(() => ({
-        select: vi.fn(() => ({
-          single: vi.fn(() => Promise.resolve({ data: {}, error: null })),
-        })),
+        select: vi.fn(() => createMockQuery()),
       })),
-      update: vi.fn(() => ({
-        eq: vi.fn(() => Promise.resolve({ data: {}, error: null })),
-      })),
-      delete: vi.fn(() => ({
-        eq: vi.fn(() => Promise.resolve({ data: {}, error: null })),
-      })),
+      update: vi.fn(() => createMockQuery()),
+      delete: vi.fn(() => createMockQuery()),
       upsert: vi.fn(() => Promise.resolve({ data: {}, error: null })),
-    })),
-  })),
+    };
+    return mockTable;
+  }),
   storage: {
     from: vi.fn(() => ({
       upload: vi.fn(() => Promise.resolve({ data: { path: 'test-path' }, error: null })),

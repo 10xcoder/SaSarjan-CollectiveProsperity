@@ -245,6 +245,33 @@ export class SessionManager {
     }
   }
   
+  getCurrentSession(): AuthSession | null {
+    const sessionData = this.getStoredSession()
+    if (sessionData && this.isSessionValid(sessionData) && this.isActivityValid(sessionData)) {
+      return sessionData.session
+    }
+    return null
+  }
+  
+  async getSession(): Promise<AuthSession | null> {
+    return this.getCurrentSession()
+  }
+  
+  async setSession(session: AuthSession) {
+    await this.saveSession(session)
+  }
+  
+  startSessionMonitoring() {
+    // Already started in constructor
+  }
+  
+  stopSessionMonitoring() {
+    if (this.activityTimer) {
+      clearInterval(this.activityTimer)
+      this.activityTimer = undefined
+    }
+  }
+  
   clearSession() {
     const sessionData = this.getStoredSession()
     if (sessionData?.session?.id) {
