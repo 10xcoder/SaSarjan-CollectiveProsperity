@@ -331,6 +331,12 @@ importers:
       '@types/node':
         specifier: ^22.5.4
         version: 22.16.0
+      '@types/react':
+        specifier: ^19.0.2
+        version: 19.1.8
+      '@types/react-dom':
+        specifier: ^19.0.2
+        version: 19.1.6(@types/react@19.1.8)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -377,12 +383,6 @@ importers:
       '@types/mapbox-gl':
         specifier: ^3.4.1
         version: 3.4.1
-      '@types/react':
-        specifier: ^19.0.2
-        version: 19.1.8
-      '@types/react-dom':
-        specifier: ^19.0.2
-        version: 19.1.6(@types/react@19.1.8)
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.21(postcss@8.5.6)
