@@ -3,7 +3,7 @@ import { AuthService } from '@sasarjan/auth'
 import { getSecureTokenService } from '@sasarjan/auth'
 import { createCookieHandler, withCsrfProtection } from '@sasarjan/auth'
 
-export const POST = withCsrfProtection(async (req: NextRequest, _res: NextResponse) => {
+export const POST = withCsrfProtection(async (req: any, _res: any) => {
   try {
     const { email, password } = await req.json()
     
