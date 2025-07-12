@@ -25,8 +25,8 @@ export function Providers({ children }: ProvidersProps) {
     activityTimeout: 30 * 60 * 1000, // 30 minutes
     
     // Supabase configuration
-    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+    supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key'
   }
   
   return (
