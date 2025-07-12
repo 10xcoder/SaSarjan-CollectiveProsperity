@@ -32,6 +32,8 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.50.3",
     "@types/cookie": "^1.0.0",
+    "@types/node": "^22.16.0",
+    "@types/react": "^18.3.23",
     "cookie": "^1.0.2",
     "jose": "^5.2.0",
     "nanoid": "^5.0.4",
@@ -42,8 +44,6 @@
     "react": "^18.0.0"
   },
   "devDependencies": {
-    "@types/node": "^22.16.0",
-    "@types/react": "^18.3.23",
     "@playwright/test": "^1.53.2",
     "@vitest/coverage-v8": "^2.1.0",
     "@vitest/ui": "^2.1.0",
