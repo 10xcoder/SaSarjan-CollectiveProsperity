@@ -49,9 +49,10 @@ playwright-report/
 **/test-results/
 **/playwright-report/
 
-# Supabase
+# Supabase (ignore root supabase directory but not app-specific ones)
 supabase/
-**/supabase/
+!/apps/*/src/lib/supabase/
+!/packages/*/src/lib/supabase/
 
 # Documentation
 docs/
