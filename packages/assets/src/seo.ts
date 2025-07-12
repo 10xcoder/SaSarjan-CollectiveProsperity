@@ -43,7 +43,7 @@ export function generateSEOTags(appId: string, metadata: SEOMetadata): Record<st
   tags['twitter:description'] = metadata.description;
   
   if (metadata.twitterImage || appAssets?.twitterImage) {
-    tags['twitter:image'] = metadata.twitterImage || appAssets.twitterImage;
+    tags['twitter:image'] = metadata.twitterImage || appAssets?.twitterImage || '';
   }
 
   // Canonical URL
