@@ -10,7 +10,7 @@ export default function HomePage() {
 
         <p className="mb-8 max-w-2xl text-xl text-gray-600">
           AI-powered discovery platform connecting startups with incubators,
-          accelerators, and the innovation ecosystem
+          accelerators, and the innovation ecosystem.
         </p>
 
         <div className="flex flex-col gap-4 sm:flex-row">
