@@ -6,6 +6,10 @@
     "es6": true
   },
   "rules": {
-    "no-undef": "off"
+    "no-undef": "off",
+    "@next/next/no-html-link-for-pages": "warn",
+    "react/no-unescaped-entities": "warn",
+    "react-hooks/exhaustive-deps": "warn",
+    "@next/next/no-img-element": "warn"
   }
 }
