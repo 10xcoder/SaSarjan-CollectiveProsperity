@@ -42,7 +42,7 @@ export default function HomePage() {
             <div className="rounded-lg bg-white p-6 shadow-sm">
               <div className="bg-incubator-secondary/10 mb-4 h-12 w-12 rounded-lg"></div>
               <h3 className="mb-2 text-xl font-semibold">Journey Tracking</h3>
-              <p className="text-gray-600">Visual roadmap from idea to scale</p>
+              <p className="text-gray-600">Visual roadmap from idea to scale.</p>
             </div>
 
             <div className="rounded-lg bg-white p-6 shadow-sm">
