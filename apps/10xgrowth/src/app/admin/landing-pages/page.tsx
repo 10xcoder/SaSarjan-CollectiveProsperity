@@ -69,7 +69,7 @@ export default async function LandingPagesPage() {
                     <dt className="text-sm font-medium text-gray-500 capitalize">
                       {status}
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900">{count}</dd>
+                    <dd className="text-lg font-medium text-gray-900">{String(count)}</dd>
                   </dl>
                 </div>
               </div>
@@ -107,7 +107,7 @@ export default async function LandingPagesPage() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {pages.map((page) => (
+                  {pages.map((page: any) => (
                     <tr key={page.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>

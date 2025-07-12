@@ -1,125 +1,304 @@
 'use client'
 
-import Link from 'next/link'
-import { Button } from './ui/button'
+import { Navbar } from './navigation/navbar/Navbar'
+import { NavConfig } from './navigation/types'
+import { NavigationWrapper } from './navigation-wrapper'
 import { ThemeToggle } from './theme-toggle'
 import { 
   GraduationCap,
-  Menu,
-  X,
   Briefcase,
   BookOpen,
   Users,
-  User
+  Award,
+  Library,
+  Target,
+  Sparkles,
+  FileText,
+  HelpCircle,
+  TrendingUp,
+  Globe,
+  Calendar,
+  MapPin,
+  DollarSign,
+  Clock,
+  Building,
+  Rocket,
+  Heart,
+  MessageSquare,
+  Video,
+  Newspaper,
+  Trophy,
+  Star,
+  CheckCircle,
+  ArrowRight
 } from 'lucide-react'
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export function Navigation() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const router = useRouter()
   
   // TODO: Re-enable authentication after fixing build issues
   const user = null
   const signOut = () => {}
+  const signIn = () => router.push('/auth/login')
 
-  const navItems = [
-    { href: '/internships', label: 'Internships', icon: Briefcase },
-    { href: '/fellowships', label: 'Fellowships', icon: GraduationCap },
-    { href: '/learning', label: 'Learning Paths', icon: BookOpen },
-    { href: '/mentors', label: 'Mentors', icon: Users },
-  ]
+  const navConfig: NavConfig = {
+    brand: {
+      name: 'TalentExcel',
+      logo: GraduationCap,
+      href: '/',
+      tagline: 'Career Excellence'
+    },
+    items: [
+      {
+        label: 'Programs',
+        icon: Award,
+        children: [
+          {
+            label: 'Tech Internships',
+            href: '/internships/tech',
+            icon: Briefcase,
+            description: 'Software, AI/ML, Data Science positions',
+            featured: true,
+            badge: 'Hot'
+          },
+          {
+            label: 'Business Internships',
+            href: '/internships/business',
+            icon: TrendingUp,
+            description: 'Marketing, Finance, Operations roles'
+          },
+          {
+            label: 'Research Fellowships',
+            href: '/fellowships/research',
+            icon: GraduationCap,
+            description: 'Academic and industry research',
+            featured: true,
+            badge: 'New'
+          },
+          {
+            label: 'Global Programs',
+            href: '/programs/global',
+            icon: Globe,
+            description: 'International opportunities',
+            badge: '50+'
+          },
+          {
+            label: 'Summer Programs',
+            href: '/programs/summer',
+            icon: Calendar,
+            description: '2-3 month intensive programs'
+          },
+          {
+            label: 'Remote Opportunities',
+            href: '/programs/remote',
+            icon: MapPin,
+            description: 'Work from anywhere positions'
+          }
+        ]
+      },
+      {
+        label: 'Learning Hub',
+        icon: BookOpen,
+        columns: 3,
+        children: [
+          {
+            label: 'AI & Machine Learning',
+            href: '/learn/ai-ml',
+            icon: Rocket,
+            description: 'Deep learning, NLP, Computer Vision',
+            featured: true,
+            badge: 'Trending'
+          },
+          {
+            label: 'Full Stack Development',
+            href: '/learn/fullstack',
+            icon: Building,
+            description: 'React, Node.js, Cloud deployment'
+          },
+          {
+            label: 'Data Science',
+            href: '/learn/data-science',
+            icon: Target,
+            description: 'Python, R, Statistical analysis'
+          },
+          {
+            label: 'Product Management',
+            href: '/learn/product',
+            icon: Star,
+            description: 'Strategy, Analytics, Leadership'
+          },
+          {
+            label: 'UI/UX Design',
+            href: '/learn/design',
+            icon: Heart,
+            description: 'Figma, User research, Prototyping'
+          },
+          {
+            label: 'Digital Marketing',
+            href: '/learn/marketing',
+            icon: MessageSquare,
+            description: 'SEO, Content, Social media'
+          },
+          {
+            label: 'Blockchain & Web3',
+            href: '/learn/blockchain',
+            icon: Globe,
+            description: 'Smart contracts, DeFi, NFTs',
+            badge: 'New'
+          },
+          {
+            label: 'Cybersecurity',
+            href: '/learn/security',
+            icon: CheckCircle,
+            description: 'Ethical hacking, Network security'
+          },
+          {
+            label: 'Cloud Computing',
+            href: '/learn/cloud',
+            icon: Building,
+            description: 'AWS, Azure, Google Cloud'
+          }
+        ]
+      },
+      {
+        label: 'Resources',
+        icon: Library,
+        columns: 2,
+        children: [
+          {
+            label: 'Career Roadmaps',
+            href: '/resources/roadmaps',
+            icon: Target,
+            description: 'Step-by-step career guides',
+            featured: true
+          },
+          {
+            label: 'Interview Prep',
+            href: '/resources/interview',
+            icon: Video,
+            description: 'Mock interviews, tips & tricks'
+          },
+          {
+            label: 'Salary Calculator',
+            href: '/resources/salary',
+            icon: DollarSign,
+            description: 'Industry-wise compensation data'
+          },
+          {
+            label: 'Resume Templates',
+            href: '/resources/resume',
+            icon: FileText,
+            description: 'ATS-friendly templates'
+          },
+          {
+            label: 'Success Stories',
+            href: '/resources/stories',
+            icon: Trophy,
+            description: 'Alumni achievements & journeys'
+          },
+          {
+            label: 'Industry Reports',
+            href: '/resources/reports',
+            icon: Newspaper,
+            description: 'Latest trends & insights'
+          },
+          {
+            label: 'Skill Assessments',
+            href: '/resources/assessments',
+            icon: CheckCircle,
+            description: 'Test your knowledge'
+          },
+          {
+            label: 'Career Events',
+            href: '/resources/events',
+            icon: Calendar,
+            description: 'Webinars, workshops & more'
+          }
+        ]
+      },
+      {
+        label: 'Mentorship',
+        icon: Users,
+        children: [
+          {
+            label: 'Find a Mentor',
+            href: '/mentors/find',
+            icon: Users,
+            description: 'Connect with industry experts',
+            featured: true,
+            badge: '500+'
+          },
+          {
+            label: 'Become a Mentor',
+            href: '/mentors/apply',
+            icon: Award,
+            description: 'Guide the next generation'
+          },
+          {
+            label: 'Group Sessions',
+            href: '/mentors/groups',
+            icon: MessageSquare,
+            description: 'Join mentor-led discussions'
+          },
+          {
+            label: '1-on-1 Coaching',
+            href: '/mentors/coaching',
+            icon: Star,
+            description: 'Personalized career guidance',
+            badge: 'Premium'
+          }
+        ]
+      },
+      {
+        label: 'Companies',
+        icon: Building,
+        children: [
+          {
+            label: 'Tech Giants',
+            href: '/companies/tech',
+            icon: Rocket,
+            description: 'Google, Microsoft, Amazon',
+            featured: true
+          },
+          {
+            label: 'Startups',
+            href: '/companies/startups',
+            icon: TrendingUp,
+            description: 'High-growth opportunities',
+            badge: '100+'
+          },
+          {
+            label: 'MNCs',
+            href: '/companies/mnc',
+            icon: Globe,
+            description: 'Global corporations'
+          },
+          {
+            label: 'Post a Job',
+            href: '/companies/post',
+            icon: ArrowRight,
+            description: 'Hire top talent',
+            external: true
+          }
+        ]
+      }
+    ],
+    actions: <ThemeToggle />,
+    sticky: true
+  }
 
   return (
-    <nav className="border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <GraduationCap className="h-8 w-8 text-blue-600" />
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                TalentExcel
-              </span>
-            </Link>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors"
-              >
-                <item.icon className="h-4 w-4" />
-                <span>{item.label}</span>
-              </Link>
-            ))}
-          </div>
-
-          {/* Right Side Actions */}
-          <div className="flex items-center space-x-4">
-            <ThemeToggle />
-            
-            {user ? (
-              <div className="flex items-center space-x-4">
-                <Link href="/dashboard">
-                  <Button variant="ghost" size="sm">
-                    <User className="h-4 w-4 mr-2" />
-                    Dashboard
-                  </Button>
-                </Link>
-                <Button variant="outline" size="sm" onClick={() => signOut()}>
-                  Sign Out
-                </Button>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Link href="/auth/login">
-                  <Button variant="ghost" size="sm">
-                    Sign In
-                  </Button>
-                </Link>
-                <Link href="/auth/register">
-                  <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                    Get Started
-                  </Button>
-                </Link>
-              </div>
-            )}
-
-            {/* Mobile menu button */}
-            <button
-              className="md:hidden"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t">
-          <div className="space-y-1 px-4 pb-3 pt-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center space-x-2 rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-blue-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-blue-400"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <item.icon className="h-5 w-5" />
-                <span>{item.label}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-    </nav>
+    <NavigationWrapper>
+      <Navbar
+        config={navConfig}
+        user={user}
+        onSignIn={signIn}
+        onSignOut={signOut}
+        showSearch={true}
+        showNotifications={true}
+        notificationCount={3}
+      />
+    </NavigationWrapper>
   )
 }

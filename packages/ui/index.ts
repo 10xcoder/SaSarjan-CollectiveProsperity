@@ -9,3 +9,6 @@ export * from './src/components/profile/ProfileManager';
 export * from './src/components/registry/PackageRegistry';
 export * from './components/logo';
 export * from './components/favicon-provider';
+
+// Export navigation components
+export * from './navigation';

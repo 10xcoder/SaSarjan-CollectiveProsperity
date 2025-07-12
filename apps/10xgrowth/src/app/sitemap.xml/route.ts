@@ -22,7 +22,7 @@ export async function GET() {
   ];
 
   // Dynamic pages from CMS
-  const dynamicPages = pages?.map(page => ({
+  const dynamicPages = pages?.map((page: any) => ({
     url: `/${page.slug}`,
     lastmod: new Date(page.updated_at).toISOString(),
     priority: getPriority(page.type),

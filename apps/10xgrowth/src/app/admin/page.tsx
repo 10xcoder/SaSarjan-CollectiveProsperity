@@ -159,7 +159,7 @@ export default async function AdminDashboard() {
           {recentPages.length > 0 ? (
             <div className="flow-root">
               <ul className="-my-5 divide-y divide-gray-200">
-                {recentPages.map((page) => (
+                {recentPages.map((page: any) => (
                   <li key={page.id} className="py-5">
                     <div className="flex items-center space-x-4">
                       <div className="flex-1 min-w-0">

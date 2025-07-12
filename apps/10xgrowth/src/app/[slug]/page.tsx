@@ -166,7 +166,7 @@ export async function generateStaticParams() {
     .eq('status', 'published')
     .eq('visibility', 'public');
 
-  return pages?.map((page) => ({
+  return pages?.map((page: any) => ({
     slug: page.slug,
   })) || [];
 }

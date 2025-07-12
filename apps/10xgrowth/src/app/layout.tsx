@@ -8,6 +8,20 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: '10xGrowth - Scale Your Business with Global Talent',
   description: 'The premier platform connecting businesses with top-tier freelancers for exponential growth. Find verified professionals, secure payments, and guaranteed quality.',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://10xgrowth.com'),
+  openGraph: {
+    title: '10xGrowth - Scale Your Business with Global Talent',
+    description: 'The premier platform connecting businesses with top-tier freelancers for exponential growth.',
+    url: '/',
+    siteName: '10xGrowth',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '10xGrowth - Scale Your Business with Global Talent',
+    description: 'The premier platform connecting businesses with top-tier freelancers for exponential growth.',
+  },
 };
 
 export default function RootLayout({

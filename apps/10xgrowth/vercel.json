@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd ../.. && pnpm install --frozen-lockfile && pnpm build --filter=@sasarjan/10xgrowth",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "installCommand": "echo 'Skipping install'"
+}

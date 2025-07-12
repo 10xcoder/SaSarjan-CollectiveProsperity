@@ -1,3 +1,150 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    /* Google Brand Colors */
+    --google-blue: 66 133 244; /* #4285F4 */
+    --google-red: 234 67 53; /* #EA4335 */
+    --google-yellow: 251 188 4; /* #FBBC04 */
+    --google-green: 52 168 83; /* #34A853 */
+    
+    /* Extended Palette */
+    --google-blue-dark: 25 103 210; /* #1967D2 */
+    --google-red-dark: 197 34 31; /* #C5221F */
+    --google-yellow-dark: 249 171 0; /* #F9AB00 */
+    --google-green-dark: 30 142 62; /* #1E8E3E */
+    
+    /* Light variants */
+    --google-blue-light: 232 240 254; /* #E8F0FE */
+    --google-red-light: 252 232 230; /* #FCE8E6 */
+    --google-yellow-light: 254 247 224; /* #FEF7E0 */
+    --google-green-light: 225 245 234; /* #E6F4EA */
+    
+    /* Neutral Colors */
+    --gray-50: 248 249 250; /* #F8F9FA */
+    --gray-100: 241 243 244; /* #F1F3F4 */
+    --gray-200: 232 234 237; /* #E8EAED */
+    --gray-300: 218 220 224; /* #DADCE0 */
+    --gray-400: 189 193 198; /* #BDC1C6 */
+    --gray-500: 154 160 166; /* #9AA0A6 */
+    --gray-600: 128 134 139; /* #80868B */
+    --gray-700: 95 99 104; /* #5F6368 */
+    --gray-800: 60 64 67; /* #3C4043 */
+    --gray-900: 32 33 36; /* #202124 */
+    
+    /* Background and foreground */
+    --background: 255 255 255;
+    --foreground: 32 33 36;
+    
+    /* Default shadcn colors mapped to Google palette */
+    --primary: var(--google-blue);
+    --primary-foreground: 255 255 255;
+    
+    --secondary: var(--gray-100);
+    --secondary-foreground: var(--gray-900);
+    
+    --accent: var(--google-yellow);
+    --accent-foreground: var(--gray-900);
+    
+    --destructive: var(--google-red);
+    --destructive-foreground: 255 255 255;
+    
+    --muted: var(--gray-100);
+    --muted-foreground: var(--gray-600);
+    
+    --card: 255 255 255;
+    --card-foreground: var(--gray-900);
+    
+    --popover: 255 255 255;
+    --popover-foreground: var(--gray-900);
+    
+    --border: var(--gray-200);
+    --input: var(--gray-200);
+    --ring: var(--google-blue);
+    
+    --radius: 0.5rem;
+  }
+  
+  .dark {
+    --background: var(--gray-900);
+    --foreground: var(--gray-50);
+    
+    --primary: var(--google-blue);
+    --primary-foreground: 255 255 255;
+    
+    --secondary: var(--gray-800);
+    --secondary-foreground: var(--gray-50);
+    
+    --accent: var(--google-yellow);
+    --accent-foreground: var(--gray-900);
+    
+    --destructive: var(--google-red);
+    --destructive-foreground: 255 255 255;
+    
+    --muted: var(--gray-800);
+    --muted-foreground: var(--gray-400);
+    
+    --card: var(--gray-800);
+    --card-foreground: var(--gray-50);
+    
+    --popover: var(--gray-800);
+    --popover-foreground: var(--gray-50);
+    
+    --border: var(--gray-700);
+    --input: var(--gray-700);
+    --ring: var(--google-blue);
+  }
+}
+
+@layer utilities {
+  /* Google color utilities */
+  .bg-google-blue { background-color: rgb(var(--google-blue)); }
+  .bg-google-red { background-color: rgb(var(--google-red)); }
+  .bg-google-yellow { background-color: rgb(var(--google-yellow)); }
+  .bg-google-green { background-color: rgb(var(--google-green)); }
+  
+  .text-google-blue { color: rgb(var(--google-blue)); }
+  .text-google-red { color: rgb(var(--google-red)); }
+  .text-google-yellow { color: rgb(var(--google-yellow)); }
+  .text-google-green { color: rgb(var(--google-green)); }
+  
+  .border-google-blue { border-color: rgb(var(--google-blue)); }
+  .border-google-red { border-color: rgb(var(--google-red)); }
+  .border-google-yellow { border-color: rgb(var(--google-yellow)); }
+  .border-google-green { border-color: rgb(var(--google-green)); }
+  
+  /* Gradient utilities */
+  .gradient-google {
+    background: linear-gradient(135deg, 
+      rgb(var(--google-blue)) 0%, 
+      rgb(var(--google-red)) 25%, 
+      rgb(var(--google-yellow)) 50%, 
+      rgb(var(--google-green)) 75%,
+      rgb(var(--google-blue)) 100%
+    );
+  }
+  
+  .gradient-google-mesh {
+    background: 
+      radial-gradient(at 0% 0%, rgb(var(--google-blue) / 0.3) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgb(var(--google-red) / 0.3) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgb(var(--google-yellow) / 0.3) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgb(var(--google-green) / 0.3) 0px, transparent 50%);
+  }
+  
+  /* Animation utilities */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+}

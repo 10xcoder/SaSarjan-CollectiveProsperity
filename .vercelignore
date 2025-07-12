@@ -1,0 +1,64 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+**/node_modules/
+
+# Environment files
+.env.local
+.env.*.local
+**/.env.local
+**/.env.*.local
+
+# Build outputs
+.next/
+out/
+dist/
+**/.next/
+**/out/
+**/dist/
+
+# IDE files
+.vscode/
+.idea/
+**/.vscode/
+**/.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+**/.DS_Store
+**/Thumbs.db
+
+# Logs
+*.log
+**/*.log
+
+# Coverage
+coverage/
+**/coverage/
+
+# Temporary files
+tmp/
+temp/
+**/tmp/
+**/temp/
+
+# Testing
+test-results/
+playwright-report/
+**/test-results/
+**/playwright-report/
+
+# Supabase
+supabase/
+**/supabase/
+
+# Documentation
+docs/
+**/docs/
+plan/
+**/plan/
+
+# Scripts
+scripts/
+**/scripts/

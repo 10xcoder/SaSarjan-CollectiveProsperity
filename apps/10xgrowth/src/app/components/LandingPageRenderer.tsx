@@ -177,8 +177,8 @@ function FeaturesBlock({ data }: { data: any }) {
           columns === 4 ? 'md:grid-cols-2 lg:grid-cols-4' :
           'md:grid-cols-3'
         }`}>
-          {data.features?.map((feature: any) => (
-            <div key={feature.id} className="text-center">
+          {data.features?.map((feature: any, index: number) => (
+            <div key={feature.id || `feature-${index}`} className="text-center">
               {feature.icon && (
                 <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
                   <span className="text-2xl text-blue-600">{feature.icon}</span>
@@ -333,8 +333,8 @@ function AppsShowcaseBlock({ data }: { data: any }) {
         )}
         
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {mockApps.map((app) => (
-            <div key={app.id} className="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition-shadow">
+          {mockApps.map((app, index) => (
+            <div key={app.id || `app-${index}`} className="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition-shadow">
               <div className="flex items-center mb-4">
                 <span className="text-3xl mr-3">{app.icon}</span>
                 <div>
@@ -388,8 +388,8 @@ function ProsperityCategoriesBlock({ data }: { data: any }) {
           columns === 4 ? 'md:grid-cols-2 lg:grid-cols-4' :
           'md:grid-cols-4'
         }`}>
-          {mockCategories.map((category) => (
-            <div key={category.id} className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
+          {mockCategories.map((category, index) => (
+            <div key={category.id || `category-${index}`} className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
               {data.showIcons && (
                 <span className="text-4xl mb-4 block">{category.icon}</span>
               )}
@@ -434,8 +434,8 @@ function StatsBlock({ data }: { data: any }) {
             ? 'flex flex-wrap justify-center gap-8' 
             : 'grid gap-8 md:grid-cols-2 lg:grid-cols-4'
         }`}>
-          {data.stats?.map((stat: any) => (
-            <div key={stat.id} className="text-center">
+          {data.stats?.map((stat: any, index: number) => (
+            <div key={stat.id || `stat-${index}`} className="text-center">
               {stat.icon && (
                 <span className="text-4xl mb-2 block">{stat.icon}</span>
               )}
@@ -483,8 +483,8 @@ function TestimonialsBlock({ data }: { data: any }) {
             ? 'grid gap-8 md:grid-cols-2 lg:grid-cols-3'
             : 'max-w-4xl mx-auto'
         }`}>
-          {data.testimonials?.map((testimonial: any) => (
-            <div key={testimonial.id} className="bg-gray-50 p-6 rounded-lg">
+          {data.testimonials?.map((testimonial: any, index: number) => (
+            <div key={testimonial.id || `testimonial-${index}`} className="bg-gray-50 p-6 rounded-lg">
               {testimonial.rating && (
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -546,8 +546,8 @@ function FAQBlock({ data }: { data: any }) {
         )}
         
         <div className="space-y-4">
-          {data.faqs?.map((faq: any) => (
-            <details key={faq.id} className="bg-white rounded-lg shadow">
+          {data.faqs?.map((faq: any, index: number) => (
+            <details key={faq.id || `faq-${index}`} className="bg-white rounded-lg shadow">
               <summary className="p-6 font-medium text-gray-900 cursor-pointer hover:bg-gray-50">
                 {faq.question}
               </summary>
@@ -588,8 +588,8 @@ function TeamBlock({ data }: { data: any }) {
           columns === 4 ? 'md:grid-cols-2 lg:grid-cols-4' :
           'md:grid-cols-3'
         }`}>
-          {data.members?.map((member: any) => (
-            <div key={member.id} className="text-center">
+          {data.members?.map((member: any, index: number) => (
+            <div key={member.id || `member-${index}`} className="text-center">
               <img
                 src={member.avatar}
                 alt={member.name}
