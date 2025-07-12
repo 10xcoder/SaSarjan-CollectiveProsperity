@@ -33,7 +33,7 @@
     "validate": "pnpm typecheck && pnpm build",
     "precommit": "pnpm typecheck",
     "clean": "turbo clean && rm -rf node_modules",
-    "prepare": "husky",
+    "prepare": "command -v husky >/dev/null && husky || echo 'Husky not available, skipping prepare'",
     "generate": "plop",
     "generate:component": "plop component",
     "generate:hook": "plop hook",
