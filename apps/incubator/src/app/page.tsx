@@ -27,7 +27,7 @@ export default function HomePage() {
       <section className="bg-gray-50 px-4 py-16">
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-12 text-center text-3xl font-bold">
-            Features Coming Soon
+            Powerful Features Coming Soon
           </h2>
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
